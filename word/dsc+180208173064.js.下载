@@ -1,0 +1,97 @@
+var tapd_dsc = {
+	cookie_key: 'dsc-token',
+	http_header_key: 'DSC-TOKEN',
+	form_key: 'dsc_token',
+
+	gen_token_and_set_to_cookie: function() {
+		var token = this.generate_dsc_token();
+		this.cookie(this.cookie_key, token, {expires: 7, path: '/'});
+
+		return token;
+	},
+
+	add_dsc_to_form: function(form_id) {
+		var token = this.gen_token_and_set_to_cookie();
+		var ele = document.createElement('input');
+		ele.setAttribute('type', 'hidden');
+		ele.setAttribute('name', this.form_key);
+		ele.setAttribute('value', token);
+
+		document.getElementById(form_id).appendChild(ele);
+	},
+
+	generate_dsc_token: function(length) {
+		length 		= length || 16;
+		var text 	= '';
+		var possible= 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+		for (var i=0; i<length; i++) {
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+		}
+
+		return text;
+	},
+
+	cookie: function(name, value, options) {
+		if (typeof value != 'undefined') { // name and value given, set cookie
+			options = options || {};
+			if (value === null) {
+				value = '';
+				options.expires = -1;
+			}
+			var expires = '';
+			if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+				var date;
+				if (typeof options.expires == 'number') {
+					date = new Date();
+					date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+				} else {
+					date = options.expires;
+				}
+				expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+			}
+			// CAUTION: Needed to parenthesize options.path and options.domain
+			// in the following expressions, otherwise they evaluate to undefined
+			// in the packed version for some reason...
+			var path = options.path ? '; path=' + (options.path) : '';
+			var domain = options.domain ? '; domain=' + (options.domain) : '';
+			var secure = options.secure ? '; secure' : '';
+			document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+		} else { // only name given, get cookie
+			var cookieValue = null;
+			if (document.cookie && document.cookie != '') {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+					var cookie = jQuery.trim(cookies[i]);
+					// Does this cookie string begin with the name we want?
+					if (cookie.substring(0, name.length + 1) == (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+	}
+};
+
+if (typeof jQuery !== 'undefined') {
+	jQuery(function() {
+		// 同步提交的表单：生成 token，写入 cookie，并做为参数提交
+		jQuery(document).delegate('form', 'submit', function(e) {
+			var token = tapd_dsc.gen_token_and_set_to_cookie();
+			var ele = jQuery('<input>').attr('type', 'hidden').attr('name', tapd_dsc.form_key).val(token);
+			jQuery(e.target).append(jQuery(ele));
+
+			return true;
+		});
+
+		// 异步提交的表单：生成 token，写入 cookie，并做为请求头提交
+		jQuery.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+			if (options['type'].toLowerCase() === 'post') {
+				var token = tapd_dsc.gen_token_and_set_to_cookie();
+				jqXHR.setRequestHeader(tapd_dsc.http_header_key, token);
+			}
+		});
+	});
+}

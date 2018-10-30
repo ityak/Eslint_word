@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<!-- saved from url=(0075)https://www.tapd.cn/23020281/documents/show/1123020281001000608?left_tree=1 -->
+<html lang="zh_CN" class="html-"><head class=""><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link type="text/css" rel="stylesheet" href="./mathjax+180712174055.css"><link type="text/css" rel="stylesheet" href="./tfl-gallery+151112155551.css">
+	
+		<meta name="renderer" content="webkit">
+	<meta name="force-rendering" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>
+		前端js代码Eslint插件校验规范说明 - TAPD	</title>
+
+	
+	<link rel="shortcut icon" href="https://www.tapd.cn/favicon.ico" type="image/x-icon">
+
+
+	<script type="text/javascript" nonce="">window._client_time_init = new Date();</script>
+	<script type="text/javascript" nonce="">	var _base = 'https://www.tapd.cn/';
+
+	
+	var tfl_path = "https://tdl.tapd.cn/tfl/";
+	var cdn_enabled = "";
+	var _domain = 'tapd.cn';
+	var jsVersion = '136483';
+	var tui_skin = 'lego';
+	var isExternal = true;
+	var isCloud = true;
+	var tui_content_skin = 'lego';
+	var isDev = '';
+	var is_idc_odc_network_failure = false;
+	var isGrayEditor = false;
+	var cloud_vpc_site = 'www.tapd.cn';
+	var enableHebe = false;
+	var enableAvatar = false;
+	try{document.domain = _domain;}catch(e){}
+</script>
+	<script nonce="">DIST_VERSION_MAP=[];</script><script nonce="" src="./dist_version_map.js.下载"></script><script nonce="" src="./dist_version_map.js(1).下载"></script><script nonce="" src="./dist_version_map.js(2).下载"></script>
+
+		<script type="text/javascript" nonce="">		var user_nick = 'tangfeng';
+		var user_id = '1255872497';
+		var base_path = 'https://www.tapd.cn/';
+		var _workspace_pretty_name = '23020281';
+		var _workspace_id = '23020281';
+		var documentDownloadUrlPrefix = "https://file.tapd.cn/23020281/documents/download/";
+		var deleteUrlPrefix = "https://www.tapd.cn/23020281/documents/delete_file/";
+		var folderId = "1123020281001000282";
+		var urlPrefix = "https:\/\/www.tapd.cn\/23020281\/documents\/";
+
+	</script>
+	<link rel="stylesheet" type="text/css" href="./tfl-style.css"><link rel="stylesheet" type="text/css" href="./tui-tapd-lego-mix2+151112164162.css"><script type="text/javascript" src="./jquery-mix+151202175523.js.下载" nonce=""></script><script type="text/javascript" src="./core_button_dialog_dropdown_tips_cluetip_dkselect_confirm_datepicker_datetimepicker_daterangepicker_field_filter_editable_remove_guide_template_pinyinuserchooser_pinyinuserchooser-avatar.js.下载" nonce=""></script><link rel="stylesheet" type="text/css" href="./user_guide+151217171278.css"><script type="text/javascript" src="./lib_ba1534c3ef49d5e17bb62fdd2817592c136483_min.js.下载" nonce=""></script><script type="text/javascript" src="./t_zh_CN+151112164129.js.下载" nonce=""></script><script type="text/javascript" src="./dsc+180208173064.js.下载" nonce=""></script>	<script type="text/javascript" src="./raven.min+170511165747.js.下载" nonce=""></script><script type="text/javascript" nonce="">	var RavenOptions = {
+		environment: 'dev',
+		ignoreErrors: ["Failed to read the 'contentDocument' property from 'HTMLIFrameElement"],
+		ignoreUrls: ["tfl/js_dist/messager+"],
+		instrument: {
+			'tryCatch': false
+		}
+	}
+	var RavenConfigUrl = 'https://b471e961fb1a4a52b3c6440c3bc16517@sentry.pot.tencent.com/22';
+		Raven.config(RavenConfigUrl,RavenOptions).install();
+	if (typeof user_id != 'undefined' && typeof user_nick != 'undefined') {
+		Raven.setUserContext({
+			id : user_id,
+			nick : user_nick
+		});
+	}
+</script><script type="text/javascript" src="./fileapp+170330164741.js.下载" async="true"></script><script type="text/javascript" src="./jquery.ui.draggable+151112155563.js.下载" async="true"></script><script type="text/javascript" src="./jquery.cluetip+151112155572.js.下载" async="true"></script><script type="text/javascript" src="./dk_select+151112155564.js.下载" async="true"></script><script type="text/javascript" src="./jquery.ui.datepicker+151112155558.js.下载" async="true"></script><script type="text/javascript" src="./jquery-1.7.2.min.extend+151112155556.js.下载" async="true"></script><script type="text/javascript" src="./headerfloat+160901171041.js.下载" async="true"></script><script type="text/javascript" src="./MathJax.js.下载" async="true"></script><script type="text/javascript" src="./tfl-gallery+151112155567.js.下载" async="true"></script><script type="text/javascript" src="./ui.dialog.tapd2+151112155568.js.下载" async="true"></script><script type="text/javascript" src="./typeahead.bundle+151112155594.js.下载" async="true"></script><script type="text/javascript" src="./pinyinEngine+151112155563.js.下载" async="true"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><script type="text/javascript" src="./tfl-template+151112155559.js.下载" async="true"></script><script type="text/javascript" src="./webuploader+170427163110.js.下载" async="true"></script><script type="text/javascript" src="./json2+170427163109.js.下载" async="true"></script></head>
+<body class="tui-skin-lego minimenu minwindow"><div id="MathJax_Message" style="display: none;"></div>
+	<!-- .frame-main -->
+	<div class="frame-main " id="page-wrapper">
+		<div class="msgbox">
+<span id="flash_message" style="display:none"></span>
+</div>
+		<link rel="stylesheet" type="text/css" href="./document_nav+170330164730.css">
+<div id="menuBar">
+    <div class="home">
+        <a class="menu-item menu-border-right document-home" href="https://www.tapd.cn/23020281/documents/file_list/1123020281001000282">
+            <i class="font-document font-document-home"></i>
+        </a>
+    </div>
+    <div class="vertical-line"></div>
+	<div title="前端js代码Eslint插件校验规范说明" class="document-name">
+		前端js代码Eslint插件校验规范说明	</div>
+			<div class="add-favorite">
+			<a class="font-document font-document-thin-favorite " title="关注" object-type="Document" object-id="1123020281001000608"></a>
+		</div>
+	
+			<div class="switch-edit">
+			<a class="btn btn-default" title="编辑文档" href="https://www.tapd.cn/23020281/documents/view/1123020281001000608">编辑文档</a>
+		</div>
+	
+	
+
+	<div class="right">
+										<a href="https://file.tapd.cn/23020281/documents/download/1123020281001000608" title="下载" class="font-document font-document-download"></a>
+						
+		<!-- 如果不是个人文档，或者是个人文档，但当前操作人为创建人，就显示更多功能图标 -->
+		<div id="document_show_dropdown" class="dropdown more" data-dropdown="click">
+	<a href="https://www.tapd.cn/23020281/documents/show/1123020281001000608?left_tree=1#" class="dropdown-toggle">
+		<i class="font-document font-document-more-vertical" title="更多"></i>
+	</a>
+	<div class="dropdown-menu dropdown-arrow">
+		<ul>
+											<li><a class="nav-move" document-id="1123020281001000608"><i class="font-document font-document-move iconfont-style"></i>移动</a></li>
+				<li><a class="nav-copy" document-id="1123020281001000608"><i class="font-document font-document-copy iconfont-style"></i>复制</a></li>
+									<span class="line"></span>
+			<ul id="delete_menu">
+								<li><a class="nav-del" document-id="1123020281001000608"><i class="font-document font-document-delete iconfont-style"></i>删除</a></li>
+								
+			</ul>
+		</ul>
+		<div class="dropdown-shadow"></div>
+	</div>
+</div>
+			</div>
+</div>		<script type="text/javascript" nonce="">			var _workspace_pretty_name = '23020281';
+			var _workspace_id = '23020281';
+		</script>
+		<div id="page-content" class="tui-d0 " style="height: 553px;">
+		<link rel="stylesheet" type="text/css" href="./fileapp+170330164733.css"><link rel="stylesheet" type="text/css" href="./file-type+170316171533.css"><script type="text/javascript" nonce="">setTimeout("loadJsFile('/js_dist/document/fileapp+170330164741.js',false,undefined)",100);</script><input id="file_id" type="hidden" value="1123020281001000608">
+<div id="file-detail">
+	<div class="fd-left">
+		<div id="mask_div"></div>
+		<div class="fd-view">
+			<div class="view-main">
+				<div class="vm-table">
+					<div class="vm-tablecell">
+					
+								<div id="showHtml" class="show-html md webkit-scrollbar-editor">
+									<div id="htmlDom" class="html-dom markdown-content-wrap" style="position: static; top: auto; left: auto;">
+										<div><h1 id="toc0">前端js代码Eslint插件校验规范说明</h1>
+
+<hr>
+
+<h3 id="toc1">ESLint作用与意义</h3>
+
+<ul>
+<li><p>ESLint 是一个语法规则和代码风格的检查工具，可以用来保证写出语法正确、风格统一的代码。</p></li><li><p>无论有多少人在维护，所有在代码仓库中的代码理应看起来像同一个人写的</p></li></ul>
+
+<h3 id="toc2">安装</h3>
+
+<ul>
+<li><p>安装</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="pun">工程安装</span></code></li><li class="L1"><code><span class="pln">yarn add eslint eslint</span><span class="pun">-</span><span class="pln">loader babel</span><span class="pun">-</span><span class="pln">eslint eslint</span><span class="pun">-</span><span class="pln">plugin</span><span class="pun">-</span><span class="pln">react</span></code></li><li class="L2"><code><span class="pln">yarn add eslint</span><span class="pun">-</span><span class="pln">config</span><span class="pun">-</span><span class="pln">airbnb eslint</span><span class="pun">-</span><span class="pln">plugin</span><span class="pun">-</span><span class="kwd">import</span><span class="pln"> eslint</span><span class="pun">-</span><span class="pln">plugin</span><span class="pun">-</span><span class="pln">jsx</span><span class="pun">-</span><span class="pln">a11y</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="pun">全局安装</span></code></li><li class="L5"><code><span class="pln">npm install eslint eslint</span><span class="pun">-</span><span class="pln">loader babel</span><span class="pun">-</span><span class="pln">eslint eslint</span><span class="pun">-</span><span class="pln">plugin</span><span class="pun">-</span><span class="pln">react </span><span class="pun">-</span><span class="pln">g</span></code></li><li class="L6"><code><span class="pln">npm install eslint</span><span class="pun">-</span><span class="pln">config</span><span class="pun">-</span><span class="pln">airbnb eslint</span><span class="pun">-</span><span class="pln">plugin</span><span class="pun">-</span><span class="kwd">import</span><span class="pln"> eslint</span><span class="pun">-</span><span class="pln">plugin</span><span class="pun">-</span><span class="pln">jsx</span><span class="pun">-</span><span class="pln">a11y </span><span class="pun">-</span><span class="pln">g</span></code></li><li class="L7"><code></code></li><li class="L8"><code><span class="pun">项目初始化</span></code></li><li class="L9"><code><span class="pln">yarn install</span></code></li></ol></pre>
+
+<h3 id="toc3">基础配置</h3>
+
+<ul>
+<li><p>详细的配置查看 <a href="http://eslint.org/docs/user-guide/configuring">http://eslint.org/docs/user-guide/configuring</a></p></li></ul>
+
+<h2 id="toc4">编码规范</h2>
+
+<h3 id="toc5">References</h3>
+
+<ul>
+<li><p>所有的赋值尽可能的使用const，避免使用var: prefer-const, no-const-assign</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">var</span><span class="pln"> a </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L2"><code><span class="kwd">var</span><span class="pln"> b </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="com">// good</span></code></li><li class="L5"><code><span class="kwd">const</span><span class="pln"> a </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L6"><code><span class="kwd">const</span><span class="pln"> b </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span></code></li><li class="L7"><code></code></li></ol></pre>
+
+<ul>
+<li><p>如果一定要对参数重新赋值，优先使用let 非var: no-var</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">var</span><span class="pln"> count </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L2"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">true</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L3"><code><span class="pln">  count </span><span class="pun">+=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L4"><code><span class="pun">}</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good, use the let.</span></code></li><li class="L7"><code><span class="pln">let count </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L8"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">true</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L9"><code><span class="pln">  count </span><span class="pun">+=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L0"><code><span class="pun">}</span></code></li></ol></pre>
+
+<ul>
+<li><p>let和const都是块级作用域</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// const 和 let 都只存在于它定义的那个块级作用域</span></code></li><li class="L1"><code><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  let a </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> b </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L4"><code><span class="pun">}</span></code></li><li class="L5"><code><span class="pln">console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">a</span><span class="pun">);</span><span class="pln"> </span><span class="com">// ReferenceError</span></code></li><li class="L6"><code><span class="pln">console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">b</span><span class="pun">);</span><span class="pln"> </span><span class="com">// ReferenceError</span></code></li></ol></pre>
+
+<h3 id="toc6">Objects</h3>
+
+<ul>
+<li><p>面向字面量创建对象： no-new-object</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> item </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Object</span><span class="pun">();</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// good</span></code></li><li class="L4"><code><span class="kwd">const</span><span class="pln"> item </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{};</span></code></li></ol></pre>
+
+<ul>
+<li><p>对无效的标识使用引号： quote-props</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> bad </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="str">'foo'</span><span class="pun">:</span><span class="pln"> </span><span class="lit">3</span><span class="pun">,</span></code></li><li class="L3"><code><span class="pln">  </span><span class="str">'bar'</span><span class="pun">:</span><span class="pln"> </span><span class="lit">4</span><span class="pun">,</span></code></li><li class="L4"><code><span class="pln">  </span><span class="str">'data-blah'</span><span class="pun">:</span><span class="pln"> </span><span class="lit">5</span><span class="pun">,</span></code></li><li class="L5"><code><span class="pun">};</span></code></li><li class="L6"><code></code></li><li class="L7"><code><span class="com">// good</span></code></li><li class="L8"><code><span class="kwd">const</span><span class="pln"> good </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L9"><code><span class="pln">  foo</span><span class="pun">:</span><span class="pln"> </span><span class="lit">3</span><span class="pun">,</span></code></li><li class="L0"><code><span class="pln">  bar</span><span class="pun">:</span><span class="pln"> </span><span class="lit">4</span><span class="pun">,</span></code></li><li class="L1"><code><span class="pln">  </span><span class="str">'data-blah'</span><span class="pun">:</span><span class="pln"> </span><span class="lit">5</span><span class="pun">,</span></code></li><li class="L2"><code><span class="pun">};</span></code></li><li class="L3"><code></code></li></ol></pre>
+
+<ul>
+<li><p>用对象方法简写： object-shorthand</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> atom </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  value</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="pln">  addValue</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L5"><code><span class="pln">    </span><span class="kwd">return</span><span class="pln"> atom</span><span class="pun">.</span><span class="pln">value </span><span class="pun">+</span><span class="pln"> value</span><span class="pun">;</span></code></li><li class="L6"><code><span class="pln">  </span><span class="pun">},</span></code></li><li class="L7"><code><span class="pun">};</span></code></li><li class="L8"><code></code></li><li class="L9"><code><span class="com">// good</span></code></li><li class="L0"><code><span class="kwd">const</span><span class="pln"> atom </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">  value</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="pln">  </span><span class="com">// 对象的方法</span></code></li><li class="L4"><code><span class="pln">  addValue</span><span class="pun">(</span><span class="pln">value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L5"><code><span class="pln">    </span><span class="kwd">return</span><span class="pln"> atom</span><span class="pun">.</span><span class="pln">value </span><span class="pun">+</span><span class="pln"> value</span><span class="pun">;</span></code></li><li class="L6"><code><span class="pln">  </span><span class="pun">},</span></code></li><li class="L7"><code><span class="pun">};</span></code></li></ol></pre>
+
+<ul>
+<li><p>用属性值缩写</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="kwd">const</span><span class="pln"> lukeSkywalker </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Luke Skywalker'</span><span class="pun">;</span></code></li><li class="L1"><code></code></li><li class="L2"><code><span class="com">// bad</span></code></li><li class="L3"><code><span class="kwd">const</span><span class="pln"> obj </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L4"><code><span class="pln">  lukeSkywalker</span><span class="pun">:</span><span class="pln"> lukeSkywalker</span><span class="pun">,</span></code></li><li class="L5"><code><span class="pun">};</span></code></li><li class="L6"><code></code></li><li class="L7"><code><span class="com">// good</span></code></li><li class="L8"><code><span class="kwd">const</span><span class="pln"> obj </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L9"><code><span class="pln">  lukeSkywalker</span><span class="pun">,</span></code></li><li class="L0"><code><span class="pun">};</span></code></li></ol></pre>
+
+<ul>
+<li><p>将所有的缩写放在对象声明的开始</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="kwd">const</span><span class="pln"> anakinSkywalker </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Anakin Skywalker'</span><span class="pun">;</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> lukeSkywalker </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Luke Skywalker'</span><span class="pun">;</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// bad</span></code></li><li class="L4"><code><span class="kwd">const</span><span class="pln"> obj </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L5"><code><span class="pln">  episodeOne</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span></code></li><li class="L6"><code><span class="pln">  twoJediWalkIntoACantina</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span></code></li><li class="L7"><code><span class="pln">  lukeSkywalker</span><span class="pun">,</span></code></li><li class="L8"><code><span class="pln">  episodeThree</span><span class="pun">:</span><span class="pln"> </span><span class="lit">3</span><span class="pun">,</span></code></li><li class="L9"><code><span class="pln">  mayTheFourth</span><span class="pun">:</span><span class="pln"> </span><span class="lit">4</span><span class="pun">,</span></code></li><li class="L0"><code><span class="pln">  anakinSkywalker</span><span class="pun">,</span></code></li><li class="L1"><code><span class="pun">};</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// good</span></code></li><li class="L4"><code><span class="kwd">const</span><span class="pln"> obj </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L5"><code><span class="pln">  lukeSkywalker</span><span class="pun">,</span></code></li><li class="L6"><code><span class="pln">  anakinSkywalker</span><span class="pun">,</span></code></li><li class="L7"><code><span class="pln">  episodeOne</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span></code></li><li class="L8"><code><span class="pln">  twoJediWalkIntoACantina</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span></code></li><li class="L9"><code><span class="pln">  episodeThree</span><span class="pun">:</span><span class="pln"> </span><span class="lit">3</span><span class="pun">,</span></code></li><li class="L0"><code><span class="pln">  mayTheFourth</span><span class="pun">:</span><span class="pln"> </span><span class="lit">4</span><span class="pun">,</span></code></li><li class="L1"><code><span class="pun">};</span></code></li></ol></pre>
+
+<ul>
+<li><p>对象的浅拷贝时，推荐使用扩展运算符，而非Object.assign</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> original </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> a</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln"> b</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="pun">};</span></code></li><li class="L2"><code><span class="kwd">const</span><span class="pln"> copy </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Object</span><span class="pun">.</span><span class="pln">assign</span><span class="pun">({},</span><span class="pln"> original</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> c</span><span class="pun">:</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="pun">});</span><span class="pln"> </span><span class="com">// copy =&gt; { a: 1, b: 2, c: 3 }</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="com">// good es6扩展运算符 ...</span></code></li><li class="L5"><code><span class="kwd">const</span><span class="pln"> original </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> a</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln"> b</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="pun">};</span></code></li><li class="L6"><code><span class="com">// 浅拷贝</span></code></li><li class="L7"><code><span class="kwd">const</span><span class="pln"> copy </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln">original</span><span class="pun">,</span><span class="pln"> c</span><span class="pun">:</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="pun">};</span><span class="pln"> </span><span class="com">// copy =&gt; { a: 1, b: 2, c: 3 }</span></code></li><li class="L8"><code><span class="com">// rest 赋值运算符</span></code></li><li class="L9"><code><span class="kwd">const</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> a</span><span class="pun">,</span><span class="pln"> </span><span class="pun">...</span><span class="pln">noA </span><span class="pun">}</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> copy</span><span class="pun">;</span><span class="pln"> </span><span class="com">// noA =&gt; { b: 2, c: 3 }</span></code></li></ol></pre>
+
+<h4 id="toc7">Arrays</h4>
+
+<ul>
+<li><p>用字面量赋值：no-array-constructor</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> items </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Array</span><span class="pun">();</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// good</span></code></li><li class="L4"><code><span class="kwd">const</span><span class="pln"> items </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[];</span></code></li><li class="L5"><code></code></li></ol></pre>
+
+<ul>
+<li><p>用Array.push代替直接向数组中添加一个值</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="kwd">const</span><span class="pln"> someStack </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[];</span></code></li><li class="L1"><code></code></li><li class="L2"><code><span class="com">// bad</span></code></li><li class="L3"><code><span class="pln">someStack</span><span class="pun">[</span><span class="pln">someStack</span><span class="pun">.</span><span class="pln">length</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">'abracadabra'</span><span class="pun">;</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="pln">someStack</span><span class="pun">.</span><span class="pln">push</span><span class="pun">(</span><span class="str">'abracadabra'</span><span class="pun">);</span></code></li></ol></pre>
+
+<ul>
+<li><p>用扩展运算符做数组的浅拷贝，类似上面对象的浅拷贝</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> len </span><span class="pun">=</span><span class="pln"> items</span><span class="pun">.</span><span class="pln">length</span><span class="pun">;</span></code></li><li class="L2"><code><span class="kwd">const</span><span class="pln"> itemsCopy </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[];</span></code></li><li class="L3"><code><span class="pln">let i</span><span class="pun">;</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="pln">i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> len</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">+=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L6"><code><span class="pln">  itemsCopy</span><span class="pun">[</span><span class="pln">i</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> items</span><span class="pun">[</span><span class="pln">i</span><span class="pun">];</span></code></li><li class="L7"><code><span class="pun">}</span></code></li><li class="L8"><code></code></li><li class="L9"><code><span class="com">// good</span></code></li><li class="L0"><code><span class="kwd">const</span><span class="pln"> itemsCopy </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[...</span><span class="pln">items</span><span class="pun">];</span></code></li></ol></pre>
+
+<ul>
+<li><p>用 ... 运算符而不是 Array.from来将一个可迭代的对象转换成数组</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="kwd">const</span><span class="pln"> foo </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">querySelectorAll</span><span class="pun">(</span><span class="str">'.foo'</span><span class="pun">);</span></code></li><li class="L1"><code></code></li><li class="L2"><code><span class="com">// good</span></code></li><li class="L3"><code><span class="kwd">const</span><span class="pln"> nodes </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Array</span><span class="pun">.</span><span class="kwd">from</span><span class="pun">(</span><span class="pln">foo</span><span class="pun">);</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// best</span></code></li><li class="L6"><code><span class="kwd">const</span><span class="pln"> nodes </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[...</span><span class="pln">foo</span><span class="pun">];</span></code></li></ol></pre>
+
+<ul>
+<li><p>用Array.from去将一个类数组对象转换成一个数组</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="kwd">const</span><span class="pln"> arrLike </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="lit">0</span><span class="pun">:</span><span class="pln"> </span><span class="str">'foo'</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">:</span><span class="pln"> </span><span class="str">'bar'</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">:</span><span class="pln"> </span><span class="str">'baz'</span><span class="pun">,</span><span class="pln"> length</span><span class="pun">:</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="pun">};</span></code></li><li class="L1"><code></code></li><li class="L2"><code><span class="com">// bad</span></code></li><li class="L3"><code><span class="kwd">const</span><span class="pln"> arr </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Array</span><span class="pun">.</span><span class="pln">prototype</span><span class="pun">.</span><span class="pln">slice</span><span class="pun">.</span><span class="pln">call</span><span class="pun">(</span><span class="pln">arrLike</span><span class="pun">);</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">const</span><span class="pln"> arr </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Array</span><span class="pun">.</span><span class="kwd">from</span><span class="pun">(</span><span class="pln">arrLike</span><span class="pun">);</span></code></li></ol></pre>
+
+<h4 id="toc8">关于解构赋值</h4>
+
+<ul>
+<li><p>用对象的解构赋值来获取和使用对象某个或多个属性值。 eslint: prefer-destructuring</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> getFullName</span><span class="pun">(</span><span class="pln">user</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> firstName </span><span class="pun">=</span><span class="pln"> user</span><span class="pun">.</span><span class="pln">firstName</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> lastName </span><span class="pun">=</span><span class="pln"> user</span><span class="pun">.</span><span class="pln">lastName</span><span class="pun">;</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> </span><span class="str">`${firstName} ${lastName}`</span><span class="pun">;</span></code></li><li class="L6"><code><span class="pun">}</span></code></li><li class="L7"><code></code></li><li class="L8"><code><span class="com">// good</span></code></li><li class="L9"><code><span class="kwd">function</span><span class="pln"> getFullName</span><span class="pun">(</span><span class="pln">user</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L0"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> firstName</span><span class="pun">,</span><span class="pln"> lastName </span><span class="pun">}</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> user</span><span class="pun">;</span></code></li><li class="L1"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> </span><span class="str">`${firstName} ${lastName}`</span><span class="pun">;</span></code></li><li class="L2"><code><span class="pun">}</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="com">// best</span></code></li><li class="L5"><code><span class="kwd">function</span><span class="pln"> getFullName</span><span class="pun">({</span><span class="pln"> firstName</span><span class="pun">,</span><span class="pln"> lastName </span><span class="pun">})</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L6"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> </span><span class="str">`${firstName} ${lastName}`</span><span class="pun">;</span></code></li><li class="L7"><code><span class="pun">}</span></code></li><li class="L8"><code></code></li></ol></pre>
+
+<ul>
+<li><p>用数组的解构</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="kwd">const</span><span class="pln"> arr </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">,</span><span class="pln"> </span><span class="lit">4</span><span class="pun">];</span></code></li><li class="L1"><code></code></li><li class="L2"><code><span class="com">// bad</span></code></li><li class="L3"><code><span class="kwd">const</span><span class="pln"> first </span><span class="pun">=</span><span class="pln"> arr</span><span class="pun">[</span><span class="lit">0</span><span class="pun">];</span></code></li><li class="L4"><code><span class="kwd">const</span><span class="pln"> second </span><span class="pun">=</span><span class="pln"> arr</span><span class="pun">[</span><span class="lit">1</span><span class="pun">];</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good</span></code></li><li class="L7"><code><span class="kwd">const</span><span class="pln"> </span><span class="pun">[</span><span class="pln">first</span><span class="pun">,</span><span class="pln"> second</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> arr</span><span class="pun">;</span></code></li></ol></pre>
+
+<ul>
+<li><p>多个返回值用对象的解构，而不是数据解构。</p></li></ul>
+
+<blockquote>
+  <p>你可以在后期添加新的属性或者变换变量的顺序而不会打破原有的调用</p>
+</blockquote>
+
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> processInput</span><span class="pun">(</span><span class="pln">input</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="com">// 然后就是见证奇迹的时刻</span></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">[</span><span class="pln">left</span><span class="pun">,</span><span class="pln"> right</span><span class="pun">,</span><span class="pln"> top</span><span class="pun">,</span><span class="pln"> bottom</span><span class="pun">];</span></code></li><li class="L4"><code><span class="pun">}</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// 调用者需要想一想返回值的顺序</span></code></li><li class="L7"><code><span class="kwd">const</span><span class="pln"> </span><span class="pun">[</span><span class="pln">left</span><span class="pun">,</span><span class="pln"> __</span><span class="pun">,</span><span class="pln"> top</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> processInput</span><span class="pun">(</span><span class="pln">input</span><span class="pun">);</span></code></li><li class="L8"><code></code></li><li class="L9"><code><span class="com">// good</span></code></li><li class="L0"><code><span class="kwd">function</span><span class="pln"> processInput</span><span class="pun">(</span><span class="pln">input</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">  </span><span class="com">// oops， 奇迹又发生了</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> left</span><span class="pun">,</span><span class="pln"> right</span><span class="pun">,</span><span class="pln"> top</span><span class="pun">,</span><span class="pln"> bottom </span><span class="pun">};</span></code></li><li class="L3"><code><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// 调用者只需要选择他想用的值就好了</span></code></li><li class="L6"><code><span class="kwd">const</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> left</span><span class="pun">,</span><span class="pln"> top </span><span class="pun">}</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> processInput</span><span class="pun">(</span><span class="pln">input</span><span class="pun">);</span></code></li></ol></pre>
+
+<h4 id="toc9">Strings</h4>
+
+<ul>
+<li><p>对string用单引号: quotes</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> name </span><span class="pun">=</span><span class="pln"> </span><span class="str">"Capt. Janeway"</span><span class="pun">;</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// bad - 样例应该包含插入文字或换行</span></code></li><li class="L4"><code><span class="kwd">const</span><span class="pln"> name </span><span class="pun">=</span><span class="pln"> </span><span class="str">`Capt. Janeway`</span><span class="pun">;</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good</span></code></li><li class="L7"><code><span class="kwd">const</span><span class="pln"> name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Capt. Janeway'</span><span class="pun">;</span></code></li><li class="L8"><code></code></li></ol></pre>
+
+<ul>
+<li><p>超过100个字符的字符串不应该用string串联成多行。</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> errorMessage </span><span class="pun">=</span><span class="pln"> </span><span class="str">'This is a super long error that was thrown because \</span></code></li><li class="L2"><code><span class="str">of Batman. When you stop to think about how Batman had anything to do \</span></code></li><li class="L3"><code><span class="str">with this, you would get nowhere \</span></code></li><li class="L4"><code><span class="str">fast.'</span><span class="pun">;</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// bad</span></code></li><li class="L7"><code><span class="kwd">const</span><span class="pln"> errorMessage </span><span class="pun">=</span><span class="pln"> </span><span class="str">'This is a super long error that was thrown because '</span><span class="pln"> </span><span class="pun">+</span></code></li><li class="L8"><code><span class="pln">  </span><span class="str">'of Batman. When you stop to think about how Batman had anything to do '</span><span class="pln"> </span><span class="pun">+</span></code></li><li class="L9"><code><span class="pln">  </span><span class="str">'with this, you would get nowhere fast.'</span><span class="pun">;</span></code></li><li class="L0"><code></code></li><li class="L1"><code><span class="com">// good</span></code></li><li class="L2"><code><span class="kwd">const</span><span class="pln"> errorMessage </span><span class="pun">=</span><span class="pln"> </span><span class="str">'This is a super long error that was thrown because of Batman. When you stop to think about how Batman had anything to do with this, you would get nowhere fast.'</span><span class="pun">;</span></code></li></ol></pre>
+
+<ul>
+<li><p></p><p>永远不要在字符串中用eval() : no-eval</p><p></p></li><li><p></p><p>不要使用不必要的转义字符: no-useless-escape</p><p></p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> foo </span><span class="pun">=</span><span class="pln"> </span><span class="str">'\'this\' \i\s \"quoted\"'</span><span class="pun">;</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// good</span></code></li><li class="L4"><code><span class="kwd">const</span><span class="pln"> foo </span><span class="pun">=</span><span class="pln"> </span><span class="str">'\'this\' is "quoted"'</span><span class="pun">;</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">//best</span></code></li><li class="L7"><code><span class="kwd">const</span><span class="pln"> foo </span><span class="pun">=</span><span class="pln"> </span><span class="str">`my name is '${name}'`</span><span class="pun">;</span></code></li></ol></pre>
+
+<h4 id="toc10">Functions</h4>
+
+<ul>
+<li><p>把立即执行函数包裹在圆括号里: wrap-iif <br>
+
+
+</p><blockquote>
+  <p>why? 一个立即调用的函数表达式是一个单元 - 把它和他的调用者（圆括号）包裹起来，在括号中可以清晰的地表达这些。</p></blockquote></li></ul><p></p>
+
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// immediately-invoked function expression (IIFE)</span></code></li><li class="L1"><code><span class="pun">(</span><span class="kwd">function</span><span class="pln"> </span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'Welcome to the Internet. Please follow me.'</span><span class="pun">);</span></code></li><li class="L3"><code><span class="pun">}());</span></code></li></ol></pre>
+
+
+<ul>
+<li><p>不要用arguments命名参数。他的优先级高于每个函数作用域自带的 arguments 对象， 这会导致函数自带的 arguments 值被覆盖</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> foo</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> options</span><span class="pun">,</span><span class="pln"> arguments</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L3"><code><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">function</span><span class="pln"> foo</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> options</span><span class="pun">,</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L8"><code><span class="pun">}</span></code></li><li class="L9"><code></code></li></ol></pre>
+
+<ul>
+<li><p>不要使用arguments，用rest语法...代替: prefer-rest-params</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> concatenateAll</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> args </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Array</span><span class="pun">.</span><span class="pln">prototype</span><span class="pun">.</span><span class="pln">slice</span><span class="pun">.</span><span class="pln">call</span><span class="pun">(</span><span class="pln">arguments</span><span class="pun">);</span></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> args</span><span class="pun">.</span><span class="pln">join</span><span class="pun">(</span><span class="str">''</span><span class="pun">);</span></code></li><li class="L4"><code><span class="pun">}</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good</span></code></li><li class="L7"><code><span class="kwd">function</span><span class="pln"> concatenateAll</span><span class="pun">(...</span><span class="pln">args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> args</span><span class="pun">.</span><span class="pln">join</span><span class="pun">(</span><span class="str">''</span><span class="pun">);</span></code></li><li class="L9"><code><span class="pun">}</span></code></li><li class="L0"><code></code></li></ol></pre>
+
+<ul>
+<li><p>把默认赋值参数放到最后</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> handleThings</span><span class="pun">(</span><span class="pln">opts </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{},</span><span class="pln"> name</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L3"><code><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">function</span><span class="pln"> handleThings</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> opts </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{})</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L8"><code><span class="pun">}</span></code></li><li class="L9"><code></code></li></ol></pre>
+
+<ul>
+<li><p>不要修改参数：no-param-reassign <br>
+
+
+</p><blockquote>
+  <p>Why? 操作参数对象对原始调用者会导致意想不到的副作用。 就是不要改参数的数据结构，保留参数原始值和数据结构。</p></blockquote></li></ul><p></p>
+
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> f1</span><span class="pun">(</span><span class="pln">obj</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  obj</span><span class="pun">.</span><span class="pln">key </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pun">};</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">function</span><span class="pln"> f2</span><span class="pun">(</span><span class="pln">obj</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> key </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Object</span><span class="pun">.</span><span class="pln">prototype</span><span class="pun">.</span><span class="pln">hasOwnProperty</span><span class="pun">.</span><span class="pln">call</span><span class="pun">(</span><span class="pln">obj</span><span class="pun">,</span><span class="pln"> </span><span class="str">'key'</span><span class="pun">)</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> obj</span><span class="pun">.</span><span class="pln">key </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L8"><code><span class="pun">};</span></code></li><li class="L9"><code></code></li></ol></pre>
+
+
+<ul>
+<li><p>不要对参数重新赋值: no-param-reassign</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> f1</span><span class="pun">(</span><span class="pln">a</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  a </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L4"><code><span class="pun">}</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="kwd">function</span><span class="pln"> f2</span><span class="pun">(</span><span class="pln">a</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">a</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> a </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span></code></li><li class="L8"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L9"><code><span class="pun">}</span></code></li><li class="L0"><code></code></li><li class="L1"><code><span class="com">// good</span></code></li><li class="L2"><code><span class="kwd">function</span><span class="pln"> f3</span><span class="pun">(</span><span class="pln">a</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> b </span><span class="pun">=</span><span class="pln"> a </span><span class="pun">||</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L4"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L5"><code><span class="pun">}</span></code></li><li class="L6"><code></code></li><li class="L7"><code><span class="kwd">function</span><span class="pln"> f4</span><span class="pun">(</span><span class="pln">a </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L9"><code><span class="pun">}</span></code></li><li class="L0"><code></code></li></ol></pre>
+
+<h3 id="toc11">箭头函数</h3>
+
+<ul>
+<li><p>当你一定要用函数表达式（在回调函数里）的时候就用箭头表达式吧。 eslint: prefer-arrow-callback, arrow-spacing</p></li></ul>
+
+<blockquote>
+  <p>why? 他创建了一个this的当前执行上下文的函数的版本，这通常就是你想要的；而且箭头函数是更简洁的语法 <br>
+  什么时候不用箭头函数： 如果你有一个相当复杂的函数，你可能会把这个逻辑移出到他自己的函数声明里。</p>
+</blockquote>
+
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">].</span><span class="pln">map</span><span class="pun">(</span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">x</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> x </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> x </span><span class="pun">*</span><span class="pln"> y</span><span class="pun">;</span></code></li><li class="L4"><code><span class="pun">});</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good</span></code></li><li class="L7"><code><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">].</span><span class="pln">map</span><span class="pun">((</span><span class="pln">x</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> x </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L9"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> x </span><span class="pun">*</span><span class="pln"> y</span><span class="pun">;</span></code></li><li class="L0"><code><span class="pun">});</span></code></li><li class="L1"><code></code></li></ol></pre>
+
+<ul>
+<li><p>如果函数体由一个没有副作用的表达式语句组成，删除大括号和return。否则，继续用大括号和 return 语句。 eslint: arrow-parens, arrow-body-style</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">].</span><span class="pln">map</span><span class="pun">(</span><span class="pln">number </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> nextNumber </span><span class="pun">=</span><span class="pln"> number </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pln">  </span><span class="str">`A string containing the ${nextNumber}.`</span><span class="pun">;</span></code></li><li class="L4"><code><span class="pun">});</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good</span></code></li><li class="L7"><code><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">].</span><span class="pln">map</span><span class="pun">(</span><span class="pln">number </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="str">`A string containing the ${number}.`</span><span class="pun">);</span></code></li><li class="L8"><code></code></li><li class="L9"><code><span class="com">// good</span></code></li><li class="L0"><code><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">].</span><span class="pln">map</span><span class="pun">((</span><span class="pln">number</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> nextNumber </span><span class="pun">=</span><span class="pln"> number </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> </span><span class="str">`A string containing the ${nextNumber}.`</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pun">});</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">].</span><span class="pln">map</span><span class="pun">((</span><span class="pln">number</span><span class="pun">,</span><span class="pln"> index</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">({</span></code></li><li class="L7"><code><span class="pln">  </span><span class="pun">[</span><span class="pln">index</span><span class="pun">]:</span><span class="pln"> number</span></code></li><li class="L8"><code><span class="pun">}));</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="com">// 表达式有副作用就不要用隐式return</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> foo</span><span class="pun">(</span><span class="pln">callback</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> val </span><span class="pun">=</span><span class="pln"> callback</span><span class="pun">();</span></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">val </span><span class="pun">===</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L4"><code><span class="pln">    </span><span class="com">// Do something if callback returns true</span></code></li><li class="L5"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L6"><code><span class="pun">}</span></code></li><li class="L7"><code></code></li><li class="L8"><code><span class="pln">let </span><span class="kwd">bool</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="com">// 这种情况会return bool = true, 不好</span></code></li><li class="L2"><code><span class="pln">foo</span><span class="pun">(()</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="kwd">bool</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">);</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="com">// good</span></code></li><li class="L5"><code><span class="pln">foo</span><span class="pun">(()</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L6"><code><span class="pln">  </span><span class="kwd">bool</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span></code></li><li class="L7"><code><span class="pun">});</span></code></li><li class="L8"><code></code></li></ol></pre>
+
+<ul>
+<li><p>如果你的函数只有一个参数并且函数体没有大括号，就删除圆括号。否则，参数总是放在圆括号里。 注意： 一直用圆括号也是没问题，只需要配置 “always” option for eslint. eslint: arrow-parens</p></li></ul>
+
+<blockquote>
+  <p>why? 这样少一些混乱， 其实没啥语法上的讲究，就保持一个风格。</p>
+</blockquote>
+
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">].</span><span class="pln">map</span><span class="pun">((</span><span class="pln">x</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> x </span><span class="pun">*</span><span class="pln"> x</span><span class="pun">);</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// good</span></code></li><li class="L4"><code><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">].</span><span class="pln">map</span><span class="pun">(</span><span class="pln">x </span><span class="pun">=&gt;</span><span class="pln"> x </span><span class="pun">*</span><span class="pln"> x</span><span class="pun">);</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good</span></code></li><li class="L7"><code><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">].</span><span class="pln">map</span><span class="pun">(</span><span class="pln">number </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">(</span></code></li><li class="L8"><code><span class="pln">  </span><span class="str">`A long string with the ${number}. It’s so long that we don’t want it to take up space on the .map line!`</span></code></li><li class="L9"><code><span class="pun">));</span></code></li><li class="L0"><code></code></li><li class="L1"><code><span class="com">// bad</span></code></li><li class="L2"><code><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">].</span><span class="pln">map</span><span class="pun">(</span><span class="pln">x </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> x </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L4"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> x </span><span class="pun">*</span><span class="pln"> y</span><span class="pun">;</span></code></li><li class="L5"><code><span class="pun">});</span></code></li><li class="L6"><code></code></li><li class="L7"><code><span class="com">// good</span></code></li><li class="L8"><code><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">].</span><span class="pln">map</span><span class="pun">((</span><span class="pln">x</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L9"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> x </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L0"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> x </span><span class="pun">*</span><span class="pln"> y</span><span class="pun">;</span></code></li><li class="L1"><code><span class="pun">});</span></code></li></ol></pre>
+
+<ul>
+<li><p>避免箭头函数(=&gt;)和比较操作符（&nbsp;&lt;=, &gt;=）混淆. eslint: no-confusing-arrow</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> itemHeight </span><span class="pun">=</span><span class="pln"> item </span><span class="pun">=&gt;</span><span class="pln"> item</span><span class="pun">.</span><span class="pln">height </span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">256</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> item</span><span class="pun">.</span><span class="pln">largeSize </span><span class="pun">:</span><span class="pln"> item</span><span class="pun">.</span><span class="pln">smallSize</span><span class="pun">;</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// bad</span></code></li><li class="L4"><code><span class="kwd">const</span><span class="pln"> itemHeight </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="pln">item</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> item</span><span class="pun">.</span><span class="pln">height </span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">256</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> item</span><span class="pun">.</span><span class="pln">largeSize </span><span class="pun">:</span><span class="pln"> item</span><span class="pun">.</span><span class="pln">smallSize</span><span class="pun">;</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good</span></code></li><li class="L7"><code><span class="kwd">const</span><span class="pln"> itemHeight </span><span class="pun">=</span><span class="pln"> item </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">(</span><span class="pln">item</span><span class="pun">.</span><span class="pln">height </span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">256</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> item</span><span class="pun">.</span><span class="pln">largeSize </span><span class="pun">:</span><span class="pln"> item</span><span class="pun">.</span><span class="pln">smallSize</span><span class="pun">);</span></code></li><li class="L8"><code></code></li><li class="L9"><code><span class="com">// good</span></code></li><li class="L0"><code><span class="kwd">const</span><span class="pln"> itemHeight </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="pln">item</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> height</span><span class="pun">,</span><span class="pln"> largeSize</span><span class="pun">,</span><span class="pln"> smallSize </span><span class="pun">}</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> item</span><span class="pun">;</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> height </span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">256</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> largeSize </span><span class="pun">:</span><span class="pln"> smallSize</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pun">};</span></code></li></ol></pre>
+
+<h3 id="toc12">Modules</h3>
+
+<ul>
+<li><p>不要用import通配符， 就是 * 这种方式 <br>
+
+
+</p><blockquote>
+  <p>Why? 这确保你有单个默认的导出</p></blockquote></li></ul><p></p>
+
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">import</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="kwd">as</span><span class="pln"> </span><span class="typ">AirbnbStyleGuide</span><span class="pln"> </span><span class="kwd">from</span><span class="pln"> </span><span class="str">'./AirbnbStyleGuide'</span><span class="pun">;</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// good</span></code></li><li class="L4"><code><span class="kwd">import</span><span class="pln"> </span><span class="typ">AirbnbStyleGuide</span><span class="pln"> </span><span class="kwd">from</span><span class="pln"> </span><span class="str">'./AirbnbStyleGuide'</span><span class="pun">;</span></code></li><li class="L5"><code></code></li></ol></pre>
+
+
+<ul>
+<li><p>在一个单一导出模块里，用 export default 更好。 eslint: import/prefer-default-export</p></li></ul>
+
+<blockquote>
+  <p>Why? 鼓励使用更多文件，每个文件只做一件事情并导出，这样可读性和可维护性更好。</p>
+</blockquote>
+
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">export</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> foo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{}</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// good</span></code></li><li class="L4"><code><span class="kwd">export</span><span class="pln"> </span><span class="kwd">default</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> foo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{}</span></code></li><li class="L5"><code></code></li></ol></pre>
+
+<ul>
+<li><p>import 放在其他所有语句之前。 eslint: import/first <br>
+
+
+</p><blockquote>
+  <p>Why? 让import放在最前面防止意外行为。</p></blockquote></li></ul><p></p>
+
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">import</span><span class="pln"> foo </span><span class="kwd">from</span><span class="pln"> </span><span class="str">'foo'</span><span class="pun">;</span></code></li><li class="L2"><code><span class="pln">foo</span><span class="pun">.</span><span class="pln">init</span><span class="pun">();</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="kwd">import</span><span class="pln"> bar </span><span class="kwd">from</span><span class="pln"> </span><span class="str">'bar'</span><span class="pun">;</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good</span></code></li><li class="L7"><code><span class="kwd">import</span><span class="pln"> foo </span><span class="kwd">from</span><span class="pln"> </span><span class="str">'foo'</span><span class="pun">;</span></code></li><li class="L8"><code><span class="kwd">import</span><span class="pln"> bar </span><span class="kwd">from</span><span class="pln"> </span><span class="str">'bar'</span><span class="pun">;</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="pln">foo</span><span class="pun">.</span><span class="pln">init</span><span class="pun">();</span></code></li></ol></pre>
+
+
+<ul>
+<li><p>多行import应该缩进，就像多行数组和对象字面量 <br>
+
+
+</p><blockquote>
+  <p>Why? 花括号与样式指南中每个其他花括号块遵循相同的缩进规则，逗号也是。</p></blockquote></li></ul><p></p>
+
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">import</span><span class="pln"> </span><span class="pun">{</span><span class="pln">longNameA</span><span class="pun">,</span><span class="pln"> longNameB</span><span class="pun">,</span><span class="pln"> longNameC</span><span class="pun">,</span><span class="pln"> longNameD</span><span class="pun">,</span><span class="pln"> longNameE</span><span class="pun">}</span><span class="pln"> </span><span class="kwd">from</span><span class="pln"> </span><span class="str">'path'</span><span class="pun">;</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// good</span></code></li><li class="L4"><code><span class="kwd">import</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L5"><code><span class="pln">  longNameA</span><span class="pun">,</span></code></li><li class="L6"><code><span class="pln">  longNameB</span><span class="pun">,</span></code></li><li class="L7"><code><span class="pln">  longNameC</span><span class="pun">,</span></code></li><li class="L8"><code><span class="pln">  longNameD</span><span class="pun">,</span></code></li><li class="L9"><code><span class="pln">  longNameE</span><span class="pun">,</span></code></li><li class="L0"><code><span class="pun">}</span><span class="pln"> </span><span class="kwd">from</span><span class="pln"> </span><span class="str">'path'</span><span class="pun">;</span></code></li></ol></pre>
+
+
+<h3 id="toc13">Properties</h3>
+
+<ul>
+<li><p>访问属性时使用点符号. eslint: dot-notation</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="kwd">const</span><span class="pln"> luke </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">  jedi</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span></code></li><li class="L2"><code><span class="pln">  age</span><span class="pun">:</span><span class="pln"> </span><span class="lit">28</span><span class="pun">,</span></code></li><li class="L3"><code><span class="pun">};</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// bad</span></code></li><li class="L6"><code><span class="kwd">const</span><span class="pln"> isJedi </span><span class="pun">=</span><span class="pln"> luke</span><span class="pun">[</span><span class="str">'jedi'</span><span class="pun">];</span></code></li><li class="L7"><code></code></li><li class="L8"><code><span class="com">// good</span></code></li><li class="L9"><code><span class="kwd">const</span><span class="pln"> isJedi </span><span class="pun">=</span><span class="pln"> luke</span><span class="pun">.</span><span class="pln">jedi</span><span class="pun">;</span></code></li></ol></pre>
+
+<ul>
+<li><p>当获取的属性是变量时用方括号[]取</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="kwd">const</span><span class="pln"> luke </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">  jedi</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span></code></li><li class="L2"><code><span class="pln">  age</span><span class="pun">:</span><span class="pln"> </span><span class="lit">28</span><span class="pun">,</span></code></li><li class="L3"><code><span class="pun">};</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="kwd">function</span><span class="pln"> getProp</span><span class="pun">(</span><span class="pln">prop</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L6"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> luke</span><span class="pun">[</span><span class="pln">prop</span><span class="pun">];</span></code></li><li class="L7"><code><span class="pun">}</span></code></li><li class="L8"><code></code></li><li class="L9"><code><span class="kwd">const</span><span class="pln"> isJedi </span><span class="pun">=</span><span class="pln"> getProp</span><span class="pun">(</span><span class="str">'jedi'</span><span class="pun">);</span></code></li></ol></pre>
+
+<h3 id="toc14">比较运算符</h3>
+
+<ul>
+<li><p>用 === 和 !== 而不是 == 和 !=. eslint: eqeqeq</p></li><li><p>布尔值用缩写，而字符串和数字要明确比较对象</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">isValid </span><span class="pun">===</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L3"><code><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">isValid</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L8"><code><span class="pun">}</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">name</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L3"><code><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">name </span><span class="pun">!==</span><span class="pln"> </span><span class="str">''</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L8"><code><span class="pun">}</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">collection</span><span class="pun">.</span><span class="pln">length</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L3"><code><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">collection</span><span class="pun">.</span><span class="pln">length </span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L8"><code><span class="pun">}</span></code></li><li class="L9"><code></code></li></ol></pre>
+
+<ul>
+<li><p>在case和default分句里用大括号创建一块包含语法声明的区域 <br>
+
+
+</p><blockquote>
+  <p>Why? 语法声明在整个switch的代码块里都可见，但是只有当其被分配后才会初始化，他的初始化时当这个case被执行时才产生。 当多个case分句试图定义同一个事情时就出问题了</p></blockquote></li></ul><p></p>
+
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">switch</span><span class="pln"> </span><span class="pun">(</span><span class="pln">foo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">case</span><span class="pln"> </span><span class="lit">1</span><span class="pun">:</span></code></li><li class="L3"><code><span class="pln">    let x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L4"><code><span class="pln">    </span><span class="kwd">break</span><span class="pun">;</span></code></li><li class="L5"><code><span class="pln">  </span><span class="kwd">case</span><span class="pln"> </span><span class="lit">2</span><span class="pun">:</span></code></li><li class="L6"><code><span class="pln">    </span><span class="kwd">const</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span></code></li><li class="L7"><code><span class="pln">    </span><span class="kwd">break</span><span class="pun">;</span></code></li><li class="L8"><code><span class="pln">  </span><span class="kwd">case</span><span class="pln"> </span><span class="lit">3</span><span class="pun">:</span></code></li><li class="L9"><code><span class="pln">    </span><span class="kwd">function</span><span class="pln"> f</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L0"><code><span class="pln">      </span><span class="com">// ...</span></code></li><li class="L1"><code><span class="pln">    </span><span class="pun">}</span></code></li><li class="L2"><code><span class="pln">    </span><span class="kwd">break</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">default</span><span class="pun">:</span></code></li><li class="L4"><code><span class="pln">    </span><span class="kwd">class</span><span class="pln"> C </span><span class="pun">{}</span></code></li><li class="L5"><code><span class="pun">}</span></code></li><li class="L6"><code></code></li><li class="L7"><code><span class="com">// good</span></code></li><li class="L8"><code><span class="kwd">switch</span><span class="pln"> </span><span class="pun">(</span><span class="pln">foo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L9"><code><span class="pln">  </span><span class="kwd">case</span><span class="pln"> </span><span class="lit">1</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L0"><code><span class="pln">    let x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L1"><code><span class="pln">    </span><span class="kwd">break</span><span class="pun">;</span></code></li><li class="L2"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">case</span><span class="pln"> </span><span class="lit">2</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L4"><code><span class="pln">    </span><span class="kwd">const</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span></code></li><li class="L5"><code><span class="pln">    </span><span class="kwd">break</span><span class="pun">;</span></code></li><li class="L6"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L7"><code><span class="pln">  </span><span class="kwd">case</span><span class="pln"> </span><span class="lit">3</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">    </span><span class="kwd">function</span><span class="pln"> f</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L9"><code><span class="pln">      </span><span class="com">// ...</span></code></li><li class="L0"><code><span class="pln">    </span><span class="pun">}</span></code></li><li class="L1"><code><span class="pln">    </span><span class="kwd">break</span><span class="pun">;</span></code></li><li class="L2"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">case</span><span class="pln"> </span><span class="lit">4</span><span class="pun">:</span></code></li><li class="L4"><code><span class="pln">    bar</span><span class="pun">();</span></code></li><li class="L5"><code><span class="pln">    </span><span class="kwd">break</span><span class="pun">;</span></code></li><li class="L6"><code><span class="pln">  </span><span class="kwd">default</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">    </span><span class="kwd">class</span><span class="pln"> C </span><span class="pun">{}</span></code></li><li class="L8"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L9"><code><span class="pun">}</span></code></li><li class="L0"><code></code></li></ol></pre>
+
+
+<ul>
+<li><p>三元表达式不应该嵌套，通常是单行表达式。no-nested-ternary.</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> foo </span><span class="pun">=</span><span class="pln"> maybe1 </span><span class="pun">&gt;</span><span class="pln"> maybe2</span></code></li><li class="L2"><code><span class="pln">  </span><span class="pun">?</span><span class="pln"> </span><span class="str">"bar"</span></code></li><li class="L3"><code><span class="pln">  </span><span class="pun">:</span><span class="pln"> value1 </span><span class="pun">&gt;</span><span class="pln"> value2 </span><span class="pun">?</span><span class="pln"> </span><span class="str">"baz"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">;</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// better</span></code></li><li class="L6"><code><span class="kwd">const</span><span class="pln"> maybeNull </span><span class="pun">=</span><span class="pln"> value1 </span><span class="pun">&gt;</span><span class="pln"> value2 </span><span class="pun">?</span><span class="pln"> </span><span class="str">'baz'</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">;</span></code></li><li class="L7"><code></code></li><li class="L8"><code><span class="kwd">const</span><span class="pln"> foo </span><span class="pun">=</span><span class="pln"> maybe1 </span><span class="pun">&gt;</span><span class="pln"> maybe2</span></code></li><li class="L9"><code><span class="pln">  </span><span class="pun">?</span><span class="pln"> </span><span class="str">'bar'</span></code></li><li class="L0"><code><span class="pln">  </span><span class="pun">:</span><span class="pln"> maybeNull</span><span class="pun">;</span></code></li><li class="L1"><code></code></li><li class="L2"><code><span class="com">// best</span></code></li><li class="L3"><code><span class="kwd">const</span><span class="pln"> maybeNull </span><span class="pun">=</span><span class="pln"> value1 </span><span class="pun">&gt;</span><span class="pln"> value2 </span><span class="pun">?</span><span class="pln"> </span><span class="str">'baz'</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">;</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="kwd">const</span><span class="pln"> foo </span><span class="pun">=</span><span class="pln"> maybe1 </span><span class="pun">&gt;</span><span class="pln"> maybe2 </span><span class="pun">?</span><span class="pln"> </span><span class="str">'bar'</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> maybeNull</span><span class="pun">;</span></code></li></ol></pre>
+
+<h4 id="toc15">Blocks</h4>
+
+<ul>
+<li><p>用大括号包裹多行代码块。 eslint: nonblock-statement-body-position</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">test</span><span class="pun">)</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="com">// good</span></code></li><li class="L5"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">test</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span></code></li><li class="L6"><code></code></li><li class="L7"><code><span class="com">// good</span></code></li><li class="L8"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">test</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L9"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span></code></li><li class="L0"><code><span class="pun">}</span></code></li><li class="L1"><code></code></li><li class="L2"><code><span class="com">// bad</span></code></li><li class="L3"><code><span class="kwd">function</span><span class="pln"> foo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">function</span><span class="pln"> bar</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span></code></li><li class="L8"><code><span class="pun">}</span></code></li></ol></pre>
+
+<ul>
+<li><p>if表达式的else和if的关闭大括号在一行。 eslint: brace-style</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">test</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  thing1</span><span class="pun">();</span></code></li><li class="L3"><code><span class="pln">  thing2</span><span class="pun">();</span></code></li><li class="L4"><code><span class="pun">}</span></code></li><li class="L5"><code><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L6"><code><span class="pln">  thing3</span><span class="pun">();</span></code></li><li class="L7"><code><span class="pun">}</span></code></li><li class="L8"><code></code></li><li class="L9"><code><span class="com">// good</span></code></li><li class="L0"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">test</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">  thing1</span><span class="pun">();</span></code></li><li class="L2"><code><span class="pln">  thing2</span><span class="pun">();</span></code></li><li class="L3"><code><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L4"><code><span class="pln">  thing3</span><span class="pun">();</span></code></li><li class="L5"><code><span class="pun">}</span></code></li><li class="L6"><code></code></li></ol></pre>
+
+<ul>
+<li><p>如果 if 语句中总是需要用 return 返回， 那后续的 else 就不需要写了。 if 块中包含 return， 它后面的 else if 块中也包含了 return， 这个时候就可以把 return 分到多个 if 语句块中。 eslint: no-else-return</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> foo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">x</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L3"><code><span class="pln">    </span><span class="kwd">return</span><span class="pln"> x</span><span class="pun">;</span></code></li><li class="L4"><code><span class="pln">  </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L5"><code><span class="pln">    </span><span class="kwd">return</span><span class="pln"> y</span><span class="pun">;</span></code></li><li class="L6"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L7"><code><span class="pun">}</span></code></li><li class="L8"><code></code></li><li class="L9"><code><span class="com">// bad</span></code></li><li class="L0"><code><span class="kwd">function</span><span class="pln"> cats</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">x</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">    </span><span class="kwd">return</span><span class="pln"> x</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pln">  </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L4"><code><span class="pln">    </span><span class="kwd">return</span><span class="pln"> y</span><span class="pun">;</span></code></li><li class="L5"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L6"><code><span class="pun">}</span></code></li><li class="L7"><code></code></li><li class="L8"><code><span class="com">// bad</span></code></li><li class="L9"><code><span class="kwd">function</span><span class="pln"> dogs</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L0"><code><span class="pln">  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">x</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">    </span><span class="kwd">return</span><span class="pln"> x</span><span class="pun">;</span></code></li><li class="L2"><code><span class="pln">  </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L3"><code><span class="pln">    </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L4"><code><span class="pln">      </span><span class="kwd">return</span><span class="pln"> y</span><span class="pun">;</span></code></li><li class="L5"><code><span class="pln">    </span><span class="pun">}</span></code></li><li class="L6"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L7"><code><span class="pun">}</span></code></li><li class="L8"><code></code></li><li class="L9"><code><span class="com">// good</span></code></li><li class="L0"><code><span class="kwd">function</span><span class="pln"> foo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">x</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">    </span><span class="kwd">return</span><span class="pln"> x</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> y</span><span class="pun">;</span></code></li><li class="L6"><code><span class="pun">}</span></code></li><li class="L7"><code></code></li><li class="L8"><code><span class="com">// good</span></code></li><li class="L9"><code><span class="kwd">function</span><span class="pln"> cats</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L0"><code><span class="pln">  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">x</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">    </span><span class="kwd">return</span><span class="pln"> x</span><span class="pun">;</span></code></li><li class="L2"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="pln">  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L5"><code><span class="pln">    </span><span class="kwd">return</span><span class="pln"> y</span><span class="pun">;</span></code></li><li class="L6"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L7"><code><span class="pun">}</span></code></li><li class="L8"><code></code></li><li class="L9"><code><span class="com">// good</span></code></li><li class="L0"><code><span class="kwd">function</span><span class="pln"> dogs</span><span class="pun">(</span><span class="pln">x</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">x</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">    </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">z</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L3"><code><span class="pln">      </span><span class="kwd">return</span><span class="pln"> y</span><span class="pun">;</span></code></li><li class="L4"><code><span class="pln">    </span><span class="pun">}</span></code></li><li class="L5"><code><span class="pln">  </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L6"><code><span class="pln">    </span><span class="kwd">return</span><span class="pln"> z</span><span class="pun">;</span></code></li><li class="L7"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L8"><code><span class="pun">}</span></code></li></ol></pre>
+
+<h4 id="toc16">Comments</h4>
+
+<ul>
+<li><p>多行注释用 /** ... */</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="com">// make() returns a new element</span></code></li><li class="L2"><code><span class="com">// based on the passed in tag name</span></code></li><li class="L3"><code><span class="com">//</span></code></li><li class="L4"><code><span class="com">// @param {String} tag</span></code></li><li class="L5"><code><span class="com">// @return {Element} element</span></code></li><li class="L6"><code><span class="kwd">function</span><span class="pln"> make</span><span class="pun">(</span><span class="pln">tag</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code></code></li><li class="L8"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> element</span><span class="pun">;</span></code></li><li class="L1"><code><span class="pun">}</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// good</span></code></li><li class="L4"><code><span class="com">/**</span></code></li><li class="L5"><code><span class="com"> * make() returns a new element</span></code></li><li class="L6"><code><span class="com"> * based on the passed-in tag name</span></code></li><li class="L7"><code><span class="com"> */</span></code></li><li class="L8"><code><span class="kwd">function</span><span class="pln"> make</span><span class="pun">(</span><span class="pln">tag</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L1"><code></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> element</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pun">}</span></code></li></ol></pre>
+
+<ul>
+<li><p>单行注释用//，将单行注释放在被注释区域上面。如果注释不是在第一行，那么注释前面就空一行</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> active </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">  </span><span class="com">// is current tab</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// good</span></code></li><li class="L4"><code><span class="com">// is current tab</span></code></li><li class="L5"><code><span class="kwd">const</span><span class="pln"> active </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span></code></li><li class="L6"><code></code></li><li class="L7"><code><span class="com">// bad</span></code></li><li class="L8"><code><span class="kwd">function</span><span class="pln"> getType</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L9"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'fetching type...'</span><span class="pun">);</span></code></li><li class="L0"><code><span class="pln">  </span><span class="com">// set the default type to 'no type'</span></code></li><li class="L1"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> type </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">_type </span><span class="pun">||</span><span class="pln"> </span><span class="str">'no type'</span><span class="pun">;</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> type</span><span class="pun">;</span></code></li><li class="L4"><code><span class="pun">}</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good</span></code></li><li class="L7"><code><span class="kwd">function</span><span class="pln"> getType</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'fetching type...'</span><span class="pun">);</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="pln">  </span><span class="com">// set the default type to 'no type'</span></code></li><li class="L1"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> type </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">_type </span><span class="pun">||</span><span class="pln"> </span><span class="str">'no type'</span><span class="pun">;</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> type</span><span class="pun">;</span></code></li><li class="L4"><code><span class="pun">}</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// also good</span></code></li><li class="L7"><code><span class="kwd">function</span><span class="pln"> getType</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">  </span><span class="com">// set the default type to 'no type'</span></code></li><li class="L9"><code><span class="pln">  </span><span class="kwd">const</span><span class="pln"> type </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">_type </span><span class="pun">||</span><span class="pln"> </span><span class="str">'no type'</span><span class="pun">;</span></code></li><li class="L0"><code></code></li><li class="L1"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> type</span><span class="pun">;</span></code></li><li class="L2"><code><span class="pun">}</span></code></li><li class="L3"><code></code></li></ol></pre>
+
+<ul>
+<li><p>在你的注释前使用FIXME'或TODO'前缀， 这有助于其他开发人员快速理解你指出的需要重新访问的问题， 或者您建议需要实现的问题的解决方案。 这些不同于常规注释，因为它们是可操作的。 动作是FIXME： - 需要计算出来或TODO： - 需要实现。</p></li><li><p>用// FIXME:给问题做注释</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="kwd">class</span><span class="pln"> </span><span class="typ">Calculator</span><span class="pln"> </span><span class="kwd">extends</span><span class="pln"> </span><span class="typ">Abacus</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">  constructor</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">    </span><span class="kwd">super</span><span class="pun">();</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="pln">    </span><span class="com">// FIXME: shouldn't use a global here</span></code></li><li class="L5"><code><span class="pln">    total </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></code></li><li class="L6"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L7"><code><span class="pun">}</span></code></li></ol></pre>
+
+<ul>
+<li><p>用// TODO:去注释问题的解决方案</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="kwd">class</span><span class="pln"> </span><span class="typ">Calculator</span><span class="pln"> </span><span class="kwd">extends</span><span class="pln"> </span><span class="typ">Abacus</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L1"><code><span class="pln">  constructor</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">    </span><span class="kwd">super</span><span class="pun">();</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="pln">    </span><span class="com">// TODO: total should be configurable by an options param</span></code></li><li class="L5"><code><span class="pln">    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">total </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></code></li><li class="L6"><code><span class="pln">  </span><span class="pun">}</span></code></li><li class="L7"><code><span class="pun">}</span></code></li></ol></pre>
+
+<h4 id="toc17">空格</h4>
+
+<ul>
+<li><p></p><p>tab用四个空格：indent</p><p></p></li><li><p></p><p>在大括号前空一格。 eslint: space-before-blocks</p><p></p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> test</span><span class="pun">(){</span></code></li><li class="L2"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'test'</span><span class="pun">);</span></code></li><li class="L3"><code><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">function</span><span class="pln"> test</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'test'</span><span class="pun">);</span></code></li><li class="L8"><code><span class="pun">}</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="pln">dog</span><span class="pun">.</span><span class="kwd">set</span><span class="pun">(</span><span class="str">'attr'</span><span class="pun">,{</span></code></li><li class="L2"><code><span class="pln">  age</span><span class="pun">:</span><span class="pln"> </span><span class="str">'1 year'</span><span class="pun">,</span></code></li><li class="L3"><code><span class="pln">  breed</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Bernese Mountain Dog'</span><span class="pun">,</span></code></li><li class="L4"><code><span class="pun">});</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good</span></code></li><li class="L7"><code><span class="pln">dog</span><span class="pun">.</span><span class="kwd">set</span><span class="pun">(</span><span class="str">'attr'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">  age</span><span class="pun">:</span><span class="pln"> </span><span class="str">'1 year'</span><span class="pun">,</span></code></li><li class="L9"><code><span class="pln">  breed</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Bernese Mountain Dog'</span><span class="pun">,</span></code></li><li class="L0"><code><span class="pun">});</span></code></li><li class="L1"><code></code></li></ol></pre>
+
+<ul>
+<li><p>在控制语句(if, while 等)的圆括号前空一格。在函数调用和定义时，参数列表和函数名之间不空格。 eslint: keyword-spacing</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">if</span><span class="pun">(</span><span class="pln">isJedi</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  fight </span><span class="pun">();</span></code></li><li class="L3"><code><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">isJedi</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  fight</span><span class="pun">();</span></code></li><li class="L8"><code><span class="pun">}</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> fight </span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log </span><span class="pun">(</span><span class="str">'Swooosh!'</span><span class="pun">);</span></code></li><li class="L3"><code><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">function</span><span class="pln"> fight</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'Swooosh!'</span><span class="pun">);</span></code></li><li class="L8"><code><span class="pun">}</span></code></li><li class="L9"><code></code></li></ol></pre>
+
+<ul>
+<li><p>用空格来隔开运算符。 eslint: space-infix-ops</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> x</span><span class="pun">=</span><span class="pln">y</span><span class="pun">+</span><span class="lit">5</span><span class="pun">;</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// good</span></code></li><li class="L4"><code><span class="kwd">const</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> y </span><span class="pun">+</span><span class="pln"> </span><span class="lit">5</span><span class="pun">;</span></code></li><li class="L5"><code></code></li></ol></pre>
+
+<ul>
+<li><p>文件结尾空一行. eslint: eol-last</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">import</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> es6 </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">from</span><span class="pln"> </span><span class="str">'./AirbnbStyleGuide'</span><span class="pun">;</span></code></li><li class="L2"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L3"><code><span class="kwd">export</span><span class="pln"> </span><span class="kwd">default</span><span class="pln"> es6</span><span class="pun">;</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">import</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> es6 </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">from</span><span class="pln"> </span><span class="str">'./AirbnbStyleGuide'</span><span class="pun">;</span></code></li><li class="L7"><code><span class="pln">  </span><span class="com">// ...</span></code></li><li class="L8"><code><span class="kwd">export</span><span class="pln"> </span><span class="kwd">default</span><span class="pln"> es6</span><span class="pun">;↵</span></code></li><li class="L9"><code></code></li></ol></pre>
+
+<ul>
+<li><p>在一个代码块后下一条语句前空一行。</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">foo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> bar</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pun">}</span></code></li><li class="L4"><code><span class="kwd">return</span><span class="pln"> baz</span><span class="pun">;</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good</span></code></li><li class="L7"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">foo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> bar</span><span class="pun">;</span></code></li><li class="L9"><code><span class="pun">}</span></code></li><li class="L0"><code></code></li><li class="L1"><code><span class="kwd">return</span><span class="pln"> baz</span><span class="pun">;</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// bad</span></code></li><li class="L4"><code><span class="kwd">const</span><span class="pln"> obj </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L5"><code><span class="pln">  foo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L6"><code><span class="pln">  </span><span class="pun">},</span></code></li><li class="L7"><code><span class="pln">  bar</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">  </span><span class="pun">},</span></code></li><li class="L9"><code><span class="pun">};</span></code></li><li class="L0"><code><span class="kwd">return</span><span class="pln"> obj</span><span class="pun">;</span></code></li><li class="L1"><code></code></li><li class="L2"><code><span class="com">// good</span></code></li><li class="L3"><code><span class="kwd">const</span><span class="pln"> obj </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L4"><code><span class="pln">  foo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L5"><code><span class="pln">  </span><span class="pun">},</span></code></li><li class="L6"><code></code></li><li class="L7"><code><span class="pln">  bar</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">  </span><span class="pun">},</span></code></li><li class="L9"><code><span class="pun">};</span></code></li><li class="L0"><code></code></li><li class="L1"><code><span class="kwd">return</span><span class="pln"> obj</span><span class="pun">;</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// bad</span></code></li><li class="L4"><code><span class="kwd">const</span><span class="pln"> arr </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span></code></li><li class="L5"><code><span class="pln">  </span><span class="kwd">function</span><span class="pln"> foo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L6"><code><span class="pln">  </span><span class="pun">},</span></code></li><li class="L7"><code><span class="pln">  </span><span class="kwd">function</span><span class="pln"> bar</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">  </span><span class="pun">},</span></code></li><li class="L9"><code><span class="pun">];</span></code></li><li class="L0"><code><span class="kwd">return</span><span class="pln"> arr</span><span class="pun">;</span></code></li><li class="L1"><code></code></li><li class="L2"><code><span class="com">// good</span></code></li><li class="L3"><code><span class="kwd">const</span><span class="pln"> arr </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span></code></li><li class="L4"><code><span class="pln">  </span><span class="kwd">function</span><span class="pln"> foo</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L5"><code><span class="pln">  </span><span class="pun">},</span></code></li><li class="L6"><code></code></li><li class="L7"><code><span class="pln">  </span><span class="kwd">function</span><span class="pln"> bar</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">  </span><span class="pun">},</span></code></li><li class="L9"><code><span class="pun">];</span></code></li><li class="L0"><code></code></li><li class="L1"><code><span class="kwd">return</span><span class="pln"> arr</span><span class="pun">;</span></code></li><li class="L2"><code></code></li></ol></pre>
+
+<ul>
+<li><p>不要用空白行填充块。 eslint: padded-blocks</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> bar</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">foo</span><span class="pun">);</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="pun">}</span></code></li><li class="L6"><code></code></li><li class="L7"><code><span class="com">// also bad</span></code></li><li class="L8"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">baz</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">qux</span><span class="pun">);</span></code></li><li class="L1"><code><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">foo</span><span class="pun">);</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="pun">}</span></code></li><li class="L5"><code></code></li><li class="L6"><code><span class="com">// good</span></code></li><li class="L7"><code><span class="kwd">function</span><span class="pln"> bar</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L8"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">foo</span><span class="pun">);</span></code></li><li class="L9"><code><span class="pun">}</span></code></li><li class="L0"><code></code></li><li class="L1"><code><span class="com">// good</span></code></li><li class="L2"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">baz</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L3"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">qux</span><span class="pun">);</span></code></li><li class="L4"><code><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L5"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">foo</span><span class="pun">);</span></code></li><li class="L6"><code><span class="pun">}</span></code></li><li class="L7"><code></code></li></ol></pre>
+
+<ul>
+<li><p>圆括号里不要加空格。 eslint: space-in-parens</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">function</span><span class="pln"> bar</span><span class="pun">(</span><span class="pln"> foo </span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> foo</span><span class="pun">;</span></code></li><li class="L3"><code><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">function</span><span class="pln"> bar</span><span class="pun">(</span><span class="pln">foo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  </span><span class="kwd">return</span><span class="pln"> foo</span><span class="pun">;</span></code></li><li class="L8"><code><span class="pun">}</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln"> foo </span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L2"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">foo</span><span class="pun">);</span></code></li><li class="L3"><code><span class="pun">}</span></code></li><li class="L4"><code></code></li><li class="L5"><code><span class="com">// good</span></code></li><li class="L6"><code><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">foo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></code></li><li class="L7"><code><span class="pln">  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">foo</span><span class="pun">);</span></code></li><li class="L8"><code><span class="pun">}</span></code></li><li class="L9"><code></code></li></ol></pre>
+
+<ul>
+<li><p>方括号里不要加空格。看示例。 eslint: array-bracket-spacing</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> foo </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="pun">];</span></code></li><li class="L2"><code><span class="pln">console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">foo</span><span class="pun">[</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="pun">]);</span></code></li><li class="L3"><code></code></li><li class="L4"><code><span class="com">// good， 逗号分隔符还是要空格的</span></code></li><li class="L5"><code><span class="kwd">const</span><span class="pln"> foo </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">];</span></code></li><li class="L6"><code><span class="pln">console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">foo</span><span class="pun">[</span><span class="lit">0</span><span class="pun">]);</span></code></li><li class="L7"><code></code></li></ol></pre>
+
+<ul>
+<li><p>花括号里加空格。 eslint: object-curly-spacing</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="com">// bad</span></code></li><li class="L1"><code><span class="kwd">const</span><span class="pln"> foo </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">clark</span><span class="pun">:</span><span class="pln"> </span><span class="str">'kent'</span><span class="pun">};</span></code></li><li class="L2"><code></code></li><li class="L3"><code><span class="com">// good</span></code></li><li class="L4"><code><span class="kwd">const</span><span class="pln"> foo </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> clark</span><span class="pun">:</span><span class="pln"> </span><span class="str">'kent'</span><span class="pln"> </span><span class="pun">};</span></code></li><li class="L5"><code></code></li></ol></pre>
+
+<ul>
+<li><p>行末不要空格。 eslint: no-trailing-spaces</p></li></ul>
+
+<h4 id="toc18">React编写规范</h4>
+
+<ul>
+<li><p>组件生命周期书写规则</p></li></ul>
+
+ 
+<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><code><span class="pln">constructor</span></code></li><li class="L1"><code><span class="pln">getChildContext</span></code></li><li class="L2"><code><span class="pln">componentWillMount</span></code></li><li class="L3"><code><span class="pln">componentDidMount</span></code></li><li class="L4"><code><span class="pln">componentWillReceiveProps</span></code></li><li class="L5"><code><span class="pln">shouldComponentUpdate</span></code></li><li class="L6"><code><span class="pln">componentWillUpdate</span></code></li><li class="L7"><code><span class="pln">componentDidUpdate</span></code></li><li class="L8"><code><span class="pln">componentWillUnmount</span></code></li><li class="L9"><code></code></li><li class="L0"><code><span class="pun">....其它函数，事件监听等</span></code></li><li class="L1"><code></code></li><li class="L2"><code><span class="pln">render</span></code></li></ol></pre>
+
+<h3 id="toc19">更多配置信息</h3>
+
+<ol>
+<li><p><a href="https://github.com/airbnb/javascript">Airbnb JavaScript</a></p></li><li><p><a href="https://github.com/airbnb/javascript/tree/master/react">Airbnb React</a></p></li></ol></div>
+									</div>
+									<div class="logoBlock">
+										<img src="./tapd_logo.png">
+									</div>	
+								</div>											</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="fd-right">
+		<div class="fd-main show-comments">
+			<div class="fd-detail">
+				<div class="detail-tab">
+					<ul class="detail-tab-ul">
+						<li class="current detail-tab-li" id="li-comment">
+							<a rel="tpl-comment">评论</a>
+						</li>
+											</ul>
+				</div>
+				<div class="detail-content-div" id="detail-content">
+	
+</div>
+			</div>
+			<div class="fd-comments">
+				
+<div class="avatar-container comment-avatar">
+				<i style="font-style: normal; " class="avatar-text-default avatar-t " title="tangfeng">
+			<span class="avatar-default-name">
+			ta			</span>
+		</i>
+					<b class="avatar-red-dot"></b>
+		
+</div>
+				<div class="comments-box">
+					<input class="comments-input" type="text" id="quick_comment_input" placeholder="添加评论...">
+					<button class="btn btn-primary btn-ok" id="quick_add_comment_btn">评论</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="fd-toggle icon-arrow-left"></div>
+</div>
+<div class="updateMask"></div>
+<div class="updateLoading"></div>
+
+<style type="text/css">
+	#page-content {
+		margin-bottom: 0 !important;
+	}
+</style>
+<script type="text/javascript" nonce="">var base_path = "https:\/\/www.tapd.cn\/23020281";
+var permissions=["bugs::merge","bugs::bug_merge_validate","bugs::delete","imports::import_bug","imports::import_preview_bug","bugreports::batchprocess","bugreports::get_bug_status_transfer_info_for_batch","bugreports::batch_change_bug_status","exports::export_table","exports::export_with_select_fields","exports::export_xls","bugreports::export_setting","buglists::export","workspaces::workspace_setting_story","prong_setting::story_type_config","prong_setting::story_source_config","sourcefiles::sourcefile_type_config","prong_setting::custom_field_setting","prong_setting::story_template_list","prong_setting::workflowlist","prong_setting::story_delete_template","prong_setting::story_template_copy","prong_setting::copy_story_setting","prong_setting::story_template_edit","prong_setting::set_story_template_sort","prong_setting::view_workflow_chart","prong_setting::status_fields_setting","prong_setting::workflow_select_fields","prong_setting::getdefaultproperty","prong_setting::story_template_add","prong_setting::edit_story_config","prongsetting::story_more_field","workspaces::story_display_setting","prong_setting::status_edit_fields_setting","prong_setting::story_field_setting","workspaces::story_switch_setting","system_field_configs::story","workspaces::workspace_setting_bug","bugsettings::customfieldsedit","bugsettings::delete_customfields_for_bug","bugsettings::customfieldslist","settings::ajax_edit","bugsettings::copy_bug_settings","bugsettings::bug_template_add","bugsettings::bug_template_edit","bugsettings::templatelist","bugsettings::set_default_template","bugsettings::set_bug_template_sort","bugsettings::bug_delete_template","bugsettings::qatemplateeditcontent","bugsettings::qatemplatedelete","bugsettings::ajax_save_qatemplatedetails","bugsettings::ajax_check_qatemplate_title","bugsettings::qatemplatedetailedittext","bugsettings::qatemplatedetaileditchart","bugsettings::qatemplatedetaileditview","bugsettings::qatemplateddel","bugsettings::qatemplatepreview","bugsettings::ajax_set_sort","bugsettings::bu_template_edit","bugsettings::bu_template_report","bugsettings::bu_template_fields","bugsettings::bu_template_apply","bugsettings::bug_more_field","bugworkflowsettings::addworkflow","bugworkflowsettings::editworkflow","bugworkflowsettings::delete_workflow_cache","bugworkflowsettings::deleteWorkflow","bugworkflowsettings::workflowlist","bugworkflowsettings::set_default_workflow","bugworkflowsettings::steplist","bugworkflowsettings::edit_status","bugworkflowsettings::transition_setting","bugworkflowsettings::transition_config","bugworkflowsettings::view_workflow_chart","bugworkflowsettings::getDefaultProperty","bugworkflowsettings::status_fields_setting","bugworkflowsettings::bug_workflow_select_fields","workspaces::bug_display_setting","bug_workflow_settings::status_edit_fields_setting","bugsettings::field_setting","workspaces::bug_switch_setting","system_field_configs::bug","stories::export_story","stories::move_story","stories::move_story_in_view_page","stories::move_story_view_tree","attachments::story_add","attachments::story_download","attachments::bug_add","attachments::bug_download","attachments::bug_delete","bugs::add","bugs::add_from_tobject","bugs::submit_from_add","bugs::quickly_add_bug","bugs::add_from_tcase_result","bugs::addce","bugs::add_support","bugs::quickly_add_bug_from_story","bugs::edit","bugs::batch_edit","bugs::submit_from_edit","bugs::inline_update","bugs::inline_update_intab","bugs::replicate","bugs::copy_bug","bugs::submit_from_copy","bugs::move_bug","bugs::move_bugs","tasks::add","tasks::edit","tasks::tasks_batch_edit","tracking::timeedit_task","tasks::inline_update","tasks::inline_update_intab","imports::import_task","imports::import_preview_task","tasks::export_task","tasks::delete","tasks::changestatus","attachments::task_add","attachments::task_download","attachments::task_delete","iterations::stories_batch_process_new","iterations::stories_batch_process_status","stories::get_story_status_transfer_info_for_batch","bugs::get_workspace_tree_for_transfer_bug","bugs::show_workspace_tree_for_transfer_bug","wikis::view","card::relate_from_wiki_dialog","wiki::cgi_get_items","wiki::cgi_get_item","wiki::cgi_get_tags","wikis::history","wikis::get_wiki","wikis::add_comment","wikis::add_like","markdownwikis::view","markdown_wikis::history","markdownwikis::get_wiki","markdown_wikis::add_comment","markdown_wikis::add_like","markdownwikis::history","markdownwikis::add_comment","markdownwikis::add_like","wikis::edit","wikis::add","wikis::check_titile_exist","markdown_wikis::edit","markdown_wikis::add","markdown_wikis::check_titile_exist","markdownwikis::check_titile_exist","wikis::delete","workspacereports::add","workspacereports::create_workspace_report_test","workspacereports::edit","workspacereports::copy","documents::view","documents::file_list","documents::show","documents::cgi_get_file_list","documents::get_mindmap_image","documents::cgi_get_comments","documents::cgi_add_comment","documents::cgi_get_word_content","documents::transfer_xmind_to_mindmap","documents::edit","documents::rename","documents::upload","documents::create_folder","documents::update_file","documents::add_word","documents::add_mindmap","documents::inline_update_name","documents::move_frame","documents::cgi_create_folder","documents::cgi_upload_image","documents::cgi_upload_image_h5","documents::save_mindmap_position","documents::transfer_file_to_word","documents::release_document_folders","documents::release_to_workspace","documents::copy","documents::cgi_rename_document","documents::cgi_move_document","documents::download","documents::multi_download","documents::export_mindmap","documents::cgi_download_file","documents::delete_file","documents::delete_folder","documents::cgi_delete_file","documents::transfer_mindmap_to_word","documents::transfer_mindmap_to_word_dialog","documents::update_mindmap_to_word","project_member"];
+var personal_permission='3';
+var logs = {"logs":[]};
+var menshen_security_suffix = "\/security";
+var comments = [];
+var add_comments_url = "https:\/\/www.tapd.cn\/23020281\/documents\/\/add_comment";
+var actions = [];
+var fileToWordUrlPrefix = "https:\/\/www.tapd.cn\/23020281\/documents\/transfer_file_to_word\/";
+var belong = 'project';
+var needReleaseHint = false;
+var preview_type = 'word';
+
+
+$('docuemnt').ready(function() {
+	if(preview_type == 'table') {
+		tableEditor.initTable($('#tapd-table'), tableData.data);
+		$('.view-main').css('right','0').css('left','0').css('top', '0').css('overflow','hidden');
+		$('.vm-tablecell').css('vertical-align','0');
+	}
+	if (preview_type == 'word') {
+		$('#htmlDom img').on('click', function(){
+			window.open($(this).attr('src'),'newwindow');
+		});
+		$('#htmlDom img').attr('title', '点击查看原图');
+	}
+	changeDivHeight();
+	if($('#toggleCategory').length > 0) {
+		$('#toggleCategory').on('click', function() {
+			if($('#toggleCategory').hasClass('unfold-toc')) {
+				$('#toggleCategory').removeClass('unfold-toc');
+				$('#toggleCategory').html('<i class="icon icon-fold"></i>展开');
+				$('#toc').css('height', '170px');
+			}else {
+				$('#toggleCategory').addClass('unfold-toc');
+				$('#toggleCategory').html('<i class="icon icon-unfold"></i>收起');
+				$('#toc').css('height', 'auto');
+			}
+		})
+	}
+
+	TFL.use('mathjax');
+	TFL.use('gallery', function () {
+
+		$('.mermaid').each(function() {
+        	var wrapper = this;
+        	
+            var svg = wrapper.querySelector('svg')
+            svg.innerHTML = '<rect width="100%" height="100%" fill="#ffffff"></rect>' + svg.innerHTML;
+
+	        var href = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(wrapper.innerHTML);
+           	wrapper.className += ' gallery';
+            wrapper.setAttribute('href', href);
+            wrapper.setAttribute('download-url', href);
+    	});
+
+    	$(".mermaid").css('display', 'inline');
+			$(".mermaid").wrap( "<div></div>" );
+
+    	TFL.gallery();
+	})
+	dealHash();
+});
+window.onresize=function(){  
+     changeDivHeight();  
+}  
+function changeDivHeight(){               
+    var h = document.documentElement.clientHeight;//获取页面可见高度  
+    $('#page-content').height(h-55);
+}
+
+function go_to_h(id) {
+	location.hash = '#toc:'+id;
+}
+
+window.onhashchange = function(){
+	dealHash();
+}
+
+function dealHash(){
+	var currentHash = window.location.hash,
+	hashId = currentHash.replace(':',''),
+	reg=/^#[\w-]*$/;
+
+	if (hashId != '' && reg.test(hashId) && $(hashId).length != 0) {
+		var needScollTop = $(hashId).offset().top - $('#file-detail .view-main').offset().top;
+		$('.view-main').animate({'scrollTop':needScollTop},300);
+	}
+}
+
+</script>
+<script id="logs-tpl" type="text/html">
+	<ul id="detail-active-ul">
+	<% for (var i=0; i<logs.length; i++) {%>
+		<li class="active-item">
+			<div class="person">
+				<div class="avatar-container avatar-tfile-logs">
+				<%if (logs[i].DocumentChangeLog.avatar) {%>
+					<img class="avatar-img-default avatar" src="<%= logs[i].DocumentChangeLog.avatar %>" alt="" >
+				<%} else {%>
+					<%
+						creator = logs[i].DocumentChangeLog.creator;
+						var creator_fl = creator.substr(0, 1);
+						var re = /[A-Za-z0-9_\.]/;
+						if (re.test(creator)) {
+							var creator_fs = creator.substr(0, 2);
+						} else {
+							var creator_fs = creator.substr(-2, 2);
+						}							
+
+						var avatar_text_extra_class = '';
+						var pattern = /^[a-zA-Z]/;
+						if (creator_fl.match(pattern)){
+							avatar_text_extra_class = 'avatar-' + creator_fl;
+						}					
+					%>
+
+					<i class="avatar-text-default avatar <%=avatar_text_extra_class%>">
+						<span class="avatar-default-name">
+						<%=creator_fs%>
+						</span>
+					</i>
+				<%}%>
+				</div>
+				<div class="name"><%= logs[i].DocumentChangeLog.creator %></div>
+			</div>
+			<div class="info">
+				<div class="title">
+					<span><%= logs[i].DocumentChangeLog.created %></span>
+					<%= logs[i].DocumentChangeLog.action_desc %>
+				</div>
+				<div class="description">
+					<span class="description-content" title="<%= logs[i].DocumentChangeLog.value %>">
+						<span class="quote-mark quote-mark-left">"</span>
+						<%= logs[i].DocumentChangeLog.value %>
+						<span class="quote-mark quote-mark-right">"</span>
+					</span>
+				</div>
+			</div>
+			<i class="icon-timeline-dot"></i>
+		</li>
+	<%}%>
+	</ul>
+</script>
+
+<script id="tpl-comment" type="text/html">
+	<%for(i = 0; i < comment.length; i++) { %>
+		<div class="combox-item clearfix">
+			<div class="combox-item-avatar">
+				<%if (comment[i]['poster']['pic']) {%>
+					<div class="avatar-container avatar-tfile-comment">
+						<img class="avatar-img-default avatar" src="<%=comment[i]['poster']['pic']%>" alt="<%=comment[i]['poster']['nick']%>" title="<%=comment[i]['poster']['nick']%>">
+					</div>
+				<%} else {%>
+					<div class="avatar-container avatar-tfile-commment">
+						<i class="avatar-text-default avatar avatar-<%=comment[i]['poster']['nick'][0]%>" title="<%=comment[i]['poster']['nick']%>">
+							<span class="avatar-default-name">
+							<%=comment[i]['thumb_nick']%>
+							</span>
+						</i>
+					</div>
+				<%}%>
+			</div>
+			<div class="combox-item-content">
+				<div class="combox-item-content-top">
+					<span class="name">
+						<%=comment[i]['poster']['nick']%>
+					</span>
+					<%if (currentUser == comment[i]['poster']['nick']) {%>
+						<a data-control="confirm" href="<%=deleteUrlPrefix+comment[i]['id']%>" class="comdel" tip="确认删除这条评论？" callback="delete_comment" comment-id="<%=comment[i]['id']%>">
+							<i class="icon-comment-delete-blue"></i>
+						</a>
+					<%}%>
+					<span class="comtime"><%=comment[i]['created']%></span>
+				</div>
+				<div class="combox-item-content-bottom">
+					<p><%=comment[i]['description']%></p>
+				</div>
+			</div>
+		</div>
+	<%}%>
+</script>	</div>
+</div><img style="display:none" class="gallery-loading" src="./gallery-loading.gif"></body></html>

@@ -1,0 +1,275 @@
+/**
+ * 表头浮动--frankzgzhou
+ * eg: 需求 缺陷列表等
+ * 用法1：如果是同步加载的表，则在相应的table上加上table-headerfixed = "true"属性即可。
+ * 用法2：如果是异步加载的表，则在相应的table上加上ajax-table-headerfixed = "true"属性。同时该html页面手动执行一次该函数。
+ * eg: $(document).ready(function(){
+ *		  TFL.use('HeaderFix').init(
+ *			 {
+ 				ajax_table = true
+ 			 }
+ *		  );
+ *	   });
+ */
+TFL.widget('HeaderFloat', {
+	options : {},
+
+	refresh: function () {
+		return; // noop
+	},
+	init: function(options){
+		var z = this;
+		if (options.hasOwnProperty('ajax_table') && options.ajax_table) {
+			z.ajax_table_header_fixed();
+		} else {
+			z.table_header_fixed();
+		}
+	},
+	table_header_fixed: function() {
+		var z = this;
+		var cur_table =  $("[table-headerfixed]");
+		if (cur_table.size() < 1) {
+			return;
+		}
+
+		// 一个表的情况
+		if (cur_table.size() == 1) {
+			// 添加固定表头的表和属性
+			var fixed_table_id = cur_table.attr('id') + "_fixed";
+			z.append_fixed_header_table(cur_table, fixed_table_id);
+			// 处理ie下点击展开收起按钮出现两个表头的bug
+			z.fix_click_bug_for_ie(cur_table, fixed_table_id);
+			// 处理异步加载页面点击表头排序后表头消失的情况
+			z.fixed_header_scroll(cur_table, fixed_table_id);
+			// 为了兼容ie8，绑定在window上
+			$(window).on('scroll', cur_table, function() {
+				z.fixed_header_scroll(cur_table, fixed_table_id);
+			});
+			$(window).resize(function() {
+				$('#' + fixed_table_id).css('width', cur_table.find('thead').width());
+				z.fixed_header_scroll(cur_table, fixed_table_id);
+			});
+
+			z.refresh = function () {
+				$('#' + fixed_table_id).css('width', cur_table.find('thead').width());
+				z.fixed_header_scroll(cur_table, fixed_table_id);				
+			}
+		}
+		// 一个页面多个表的情况（需要再修改）
+	},
+
+	/** 处理异步加载的页面，目前用于迭代详情页面的需求和缺陷页面上
+	  * 到相应的异步加载页面中手动加上该函数
+	  */
+	ajax_table_header_fixed: function() {
+		var z = this;
+		var cur_ajax_table =  $("[ajax-table-headerfixed]");
+		if (cur_ajax_table.size() < 1) {
+			return;
+		}
+
+		// 一个表的情况
+		if (cur_ajax_table.size() == 1) {
+			// 添加固定表头的表和属性
+			var fixed_table_id = cur_ajax_table.attr('id') + "_fixed";
+			z.append_fixed_header_table(cur_ajax_table, fixed_table_id);
+			// 处理ie下点击展开收起按钮出现两个表头的bug
+			z.fix_click_bug_for_ie(cur_ajax_table, fixed_table_id);
+			// 处理异步加载页面点击表头排序后表头消失的情况
+			z.fixed_header_scroll(cur_ajax_table, fixed_table_id);
+			// 为了兼容ie8，绑定在window上
+			$(window).on('scroll.' + fixed_table_id, cur_ajax_table, function() {
+				z.fixed_header_scroll(cur_ajax_table, fixed_table_id);
+			});
+			$(window).resize(function() {
+				$('#' + fixed_table_id).css('width', cur_ajax_table.find('thead').width());
+				z.fixed_header_scroll(cur_ajax_table, fixed_table_id);
+			});
+
+			z.refresh = function () {
+				$('#' + fixed_table_id).css('width', cur_ajax_table.find('thead').width());
+				z.fixed_header_scroll(cur_ajax_table, fixed_table_id);	
+			}
+		}
+
+		// 切换tab，存在多个ajax，页面里多个表的情况
+		if (cur_ajax_table.size() > 1) {
+			cur_ajax_table.each(function(index) {
+				//没有添加过浮动效果的才继续添加
+				if (cur_ajax_table.eq(index).attr('header_fixed_init') != 1) {
+					// 添加固定表头的表和属性
+					var fixed_table_id = cur_ajax_table.eq(index).attr("id") + "_fixed";
+					z.append_fixed_header_table(cur_ajax_table.eq(index), fixed_table_id);
+					// 处理ie下点击展开收起按钮出现两个表头的bug
+					z.fix_click_bug_for_ie(cur_ajax_table.eq(index), fixed_table_id);
+					// 处理异步加载页面点击表头排序后表头消失的情况
+					z.fixed_header_scroll(cur_ajax_table.eq(index), fixed_table_id);
+					// 为了兼容ie8，绑定在window上
+					$(window).on('scroll.' + fixed_table_id, cur_ajax_table.eq(index), function() {
+						z.fixed_header_scroll(cur_ajax_table.eq(index), fixed_table_id);
+					});
+					$(window).resize(function() {
+						$('#' + fixed_table_id).css('width', cur_ajax_table.eq(index).find('thead').width());
+					});
+				}	
+			});
+		}	
+		// 响应tab点击事件来绑定和解绑scroll，防止多绑出现bug，用于迭代详情页面
+		$(document).off('click.off').on('click.off', '#g_tab', function() {
+			cur_ajax_table.each(function(index){
+				if (cur_ajax_table.eq(index).is(":visible")) {
+					$(window).off('scroll.' + cur_ajax_table.eq(index).attr('id') + "_fixed").on('scroll.' + cur_ajax_table.eq(index).attr('id') + "_fixed", cur_ajax_table.eq(index), function(){
+						z.fixed_header_scroll(cur_ajax_table.eq(index), cur_ajax_table.eq(index).attr('id') + "_fixed");
+					});
+				} else {
+					$(window).off('scroll.' + cur_ajax_table.eq(index).attr('id') + "_fixed");
+				}
+			});
+		});
+		// 用于迭代详情页面
+		$(document).off('click.show').on('click.show', '#show_story_b', function() {
+			cur_ajax_table.each(function(index){
+				if (cur_ajax_table.eq(index).find('#stories-fold-all-toggle').is(":hidden")) {
+					$('#' + cur_ajax_table.eq(index).attr('id') + "_fixed").find('#stories-fold-all-toggle').attr('style','display:none');
+				} else {
+					$('#' + cur_ajax_table.eq(index).attr('id') + "_fixed").find('#stories-fold-all-toggle').attr('style','display:;');
+				}
+			});
+		});
+	},
+
+	/** 目标上下滚动距离与当前页面上下滚动距离的差
+	  * @param obj 目标元素
+	 **/
+	get_table_pos_top: function(obj) {
+		var top = document.body.scrollTop | document.documentElement.scrollTop;
+		return obj.offset().top - top;
+	},
+
+	/** 目标左右滚动距离与当前页面左右滚动距离的差
+	  * @param obj 目标元素
+	 **/
+	get_table_pos_left: function(obj) {
+		var left = document.body.scrollLeft | document.documentElement.scrollLeft;
+		return obj.offset().left - left;
+	},
+
+	/** 添加和复制用于固定表头的table
+	  * @param current_table 目标table
+	  * @param fixed_table_id 固定表头的table的id
+	 **/
+	append_fixed_header_table: function(current_table, fixed_table_id) {
+		var fixed_top = $('.topnav2').height() || $('#hd').height();
+		if ($('.top-alert').length > 0) {
+			fixed_top +=  $('.top-alert').outerHeight();
+		}
+		if (0 >= $('#' + fixed_table_id).size()) {
+			// 添加固定表头的表
+			current_table.after('<table id="' + fixed_table_id + '"' + ' class="g_table tfl-editable" style="display:none; top:' + fixed_top + 'px !important; box-shadow: 2px 2px 4px rgba(0,0,0,0.1); -moz-box-shadow: 2px 2px 4px rgba(0,0,0,0.1); -webkit-box-shadow: 2px 2px 4px rgba(0,0,0,0.1); position: fixed"></table>');
+			// 复制当前表的表头数据
+			$('#' + fixed_table_id).prepend(current_table.find('thead').clone());
+			// 添加上已固定表头的参数
+			current_table.attr('header_fixed_init', '1');
+		}
+	},
+
+	adjust_fixed_header_top : function(fixed_table_id) {
+		if ($('.topnav2').size() > 0 || $('#hd').size() > 0) {
+			var fixed_top = $('.topnav2').height() || $('#hd').height();
+		} else {
+			var fixed_top = 0;
+		}
+		if ($('.top-alert').length > 0) {
+			fixed_top +=  $('.top-alert').outerHeight();
+		}
+		if (0 < $('#' + fixed_table_id).size()) {
+			$('#' + fixed_table_id).css('top', fixed_top);
+		}	
+	},
+
+	/** 显示用于固定表头的table
+	  * @param current_table 目标table
+	  * @param fixed_table_id 固定表头的table的id
+	 **/
+	show_fixed_header: function(current_table, fixed_table_id) {
+		current_table.find('thead').find('th').each(function(index) {
+			$('#' + fixed_table_id + ' thead').find('th').eq(index).width($(this).width());
+		});
+		// 如果表格需要紧贴左边，对应表格加上fixed-header-full="true"属性
+		if ($('[fixed-header-full]').length > 0) {
+			$('#' + fixed_table_id).css('left', 0);
+			$('#' + fixed_table_id).find('.flag_area').width($('#' + fixed_table_id).find('.flag_area').width() + 60);
+		}
+		$('#' + fixed_table_id).css('width', current_table.find('thead').width()).show();
+	},
+
+	/** 隐藏用于固定表头的table
+	  * @param current_table 目标table
+	  * @param fixed_table_id 固定表头的table的id
+	 **/
+	hide_fixed_header: function(fixed_table_id) {
+		$('#' + fixed_table_id).hide();
+	},
+
+	/** 调整用于固定表头的table的left，避免表头过长使固定表头后面的数据不可见
+	  * @param current_table 目标table
+	  * @param fixed_table_id 固定表头的table的id
+	 **/
+	adjust_fixed_header: function(current_table, fixed_table_id) {
+		var z = this;
+		// 如果表格需要紧贴左边，对应表格加上fixed-header-full="true"属性
+		if ($('[fixed-header-full]').length > 0) {
+			$('#' + fixed_table_id).css('left', z.get_table_pos_left(current_table) - 60);
+			// 处理左侧菜单是否有打开的情况
+			$(document).bind('leftTreeOpen',function(event){
+				var w = $('#' + fixed_table_id).width() - 200;
+				$('#' + fixed_table_id).css({'width':w+'px','left':z.get_table_pos_left(current_table) - 60});
+			});
+			$(document).bind('leftTreeClose',function(event){
+				$('#' + fixed_table_id).css({'width':'100%','left':z.get_table_pos_left(current_table) - 60});
+			});
+		} else {
+			$('#' + fixed_table_id).css('left', z.get_table_pos_left(current_table));
+			// 处理左侧菜单是否有打开的情况
+			$(document).bind('leftTreeOpen',function(event){
+				var w = $('#' + fixed_table_id).width() - 200;
+				$('#' + fixed_table_id).css({'width':w+'px','left':z.get_table_pos_left(current_table)});
+			});
+			$(document).bind('leftTreeClose',function(event){
+				$('#' + fixed_table_id).css({'width':'100%','left':z.get_table_pos_left(current_table)});
+			});
+		}
+		// 调整表格紧贴浏览器右边
+		var window_width = document.documentElement.clientWidth;
+		if ($('#' + fixed_table_id).width() < window_width) {
+			$('#' + fixed_table_id).find('th:last').width($('#' + fixed_table_id).find('th:last').width() + window_width - $('#' + fixed_table_id).width());
+		}
+	},
+
+	/** 固定表头的table的滚动函数
+	  * @param current_table 目标table
+	  * @param fixed_table_id 固定表头的table的id
+	 **/
+	fixed_header_scroll: function(current_table, fixed_table_id) {
+		var z = this;
+		// 差值小于10
+		if (z.get_table_pos_top(current_table) < 10) {
+			z.show_fixed_header(current_table, fixed_table_id);
+		} else {
+			z.hide_fixed_header(fixed_table_id);
+		}
+		z.adjust_fixed_header(current_table, fixed_table_id);
+	},
+
+	/** 处理ie下点击展开收起按钮出现两个表头的bug
+	  * @param current_table 目标table
+	  * @param fixed_table_id 固定表头的table的id
+	 **/
+	fix_click_bug_for_ie: function(current_table, fixed_table_id) {
+		var z = this;
+		var fold_btn = $('#' + current_table.attr('id') + "_fixed").find('i').attr('id');
+		$(document).off('click.ie').on('click.ie', '#' + fold_btn, function() {
+			z.fixed_header_scroll(current_table, fixed_table_id);
+		});
+	},
+});

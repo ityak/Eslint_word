@@ -1,0 +1,565 @@
+/**
+ * 文件上传模块
+ * @return {[type]} [description]
+ */
+//更新文件
+var showPageUploader;
+function fileUploadMod(){
+	$("#document_show_dropdown").bind("dropdownopen",function(){
+		TFL.use(
+			'template',
+		    _base + 'js/document/webuploader.js',
+		    _base + 'js/document/json2.js',
+			function(){
+				var file_id = $("#file_id").val();
+				//上传门神安全模块 by voladozhang
+				save_url = urlPrefix + 'update_file/' + file_id,
+				enable_menshen_suffix = (typeof(menshen_security_suffix) == 'undefined' || menshen_security_suffix == '') ? false : menshen_security_suffix;
+				if(enable_menshen_suffix !== false) save_url = save_url + enable_menshen_suffix;
+			 	// 文件上传配置
+			 	if (showPageUploader == undefined) {
+			        showPageUploader = WebUploader.create({
+			            // swf文件路径
+			            swf: _base + 'js/document/Uploader.swf',
+			            // 文件接收服务端。
+			            server: save_url,
+			            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+			            pick: {
+			            	id: '#update_file',
+			           		multiple: false
+			            },
+			            fileSingleSizeLimit: 150000000, //限制100M
+			            fileVal: 'files',
+			            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+			            resize: false
+			        });
+			        // 添加到文件队列并上传
+			        showPageUploader.on( 'filesQueued', function( files ){
+			        	if(files.length > 0){
+			        		$('.updateMask,.updateLoading').show();
+			        	}
+			        	// 开始上传
+			            showPageUploader.upload();
+			        });
+
+			        // 上传成功
+			        showPageUploader.on( 'uploadSuccess', function(file, data) {
+			        	if('name_duplicated' == data['_raw']) {
+			        		$('.updateMask,.updateLoading').hide();
+			        		TFL.tips.showFlash('当前文件夹下有重名文件，请尝试更新另外一个文件。', true, 3000);
+			        	} else {
+			        		window.location.reload();
+			        	}
+			        });
+
+			        // 文件上传失败，显示上传出错。
+			        showPageUploader.on( 'uploadError', function( file ) {
+			        	$('.updateMask,.updateLoading').hide();
+			            TFL.tips.showFlash(file.name + ' 上传失败！请重新上传！');
+			        });
+
+			        // 文件上传失败，显示上传出错。
+			        showPageUploader.on( 'error', function(type, whatever, file) {
+			        	$('.updateMask,.updateLoading').hide();
+			            var tipsText = ' 上传失败！';
+			            switch(type){
+		                    case 'F_EXCEED_SIZE':
+		                        tipsText = ' 超出文件大小限制，上传失败！ ';
+		                        break;
+		                    case 'Q_TYPE_DENIED':
+		                        tipsText = ' 文件大小为空，上传失败！ ';
+		                        break;
+		                    default:
+		                        return ;
+		                }
+			            TFL.tips.showFlash(file.name + tipsText);
+			        });
+			        
+			 	}
+
+
+		        var logs_html = template('logs-tpl', logs);
+		        $('#detail-active-ul').html(logs_html);
+			}
+		);
+	});
+}
+
+$(function() {
+	fileUploadMod();
+	miniRightWrap();
+	initComments();
+
+	$('#li-logs').click(function() {
+		$('.fd-comments').css('display','none');
+	});
+
+	$('#li-comment').click(function() {
+		$('.fd-comments').css('display','block');
+	});
+
+	//添加评论回车
+	$('#quick_comment_input').bind('keydown', function(e) {
+		if(e.keyCode == 13) {
+			$('#quick_add_comment_btn').click();
+		}
+	});
+
+	//添加评论按钮
+	$('#quick_add_comment_btn').click(function(){
+		var value = $('#quick_comment_input').val().trim();
+		if(value == '') {
+			TFL.tips.showFlash('评论内容不能为空');
+			return ;
+		}
+		if($('#quick_add_comment_btn').hasClass('btn-disable')) {
+			return ;
+		}
+		$('#quick_add_comment_btn').addClass('btn-disable');
+		var fileId = $("#file_id").val();
+
+		if (value != '') {
+			$.ajax({
+				url   :  add_comments_url,
+				type  : 'post',
+				dataType:'json',
+				data  : {
+					'data[id]' : fileId,
+					'data[comment]' : value
+				},
+				success : function(data) {
+					$('#quick_add_comment_btn').removeClass('btn-disable');
+					if ('success' == data.status) {
+						$('#quick_comment_input').val('');
+						if($('#li-comment').hasClass('current')){
+							var deleteUrlPrefix = urlPrefix + 'delete_comment/';
+							var commentHtml = template('tpl-comment', { comment: data.comment, deleteUrlPrefix: deleteUrlPrefix, currentUser: user_nick});
+							if (commentHtml.length < 2) {
+								commentHtml = '<p class="comment-empty-tip">暂无任何评论</p>';
+							}
+							$('#detail-content').prepend(commentHtml);
+						}
+						maintainCommentDataset(data.comment, true);
+						$(".comment-empty-tip").remove();
+					}
+				}
+			});
+		}
+	});
+
+	$('.detail-tab-li').click(function(){
+		var $li = $(this);
+		if(!$li.hasClass('current')){
+			$li.closest('.detail-tab-ul').find('li.current').removeClass('current');
+			$li.addClass('current');
+
+			if('li-comment' == $li.attr('id')){
+				$(this).closest('.fd-main').removeClass('show-logs').addClass('show-comments');
+				initComments();
+			} else {
+				$(this).closest('.fd-main').removeClass('show-comments').addClass('show-logs');
+				initChangeLogs();
+			}
+		}
+	});
+
+	scrollToLoadMoreLogs();
+	window.logs_per_page = 50;
+	window.current_log_page = 1;
+	$('#detail-active-ul li:gt(' + window.logs_per_page + ')').hide();
+
+	bindXmindToMindmap();
+
+	$(document).on('click', '.font-document-thin-favorite', function() {
+		deal_favorite(this);
+	}).on('click', '.doc-to-online-word-btn', function() {
+		if (!$(this).hasClass('no-permission')) {
+			fileToDocument(this);
+		}
+	}).on('click', '.nav-move', function() {
+		var dId = $(this).attr('document-id');
+		move_file(dId);
+	}).on('click', '.nav-copy', function() {
+		var dId = $(this).attr('document-id');
+		copy_file(dId);
+	}).on('click', '.nav-pulish-pro', function() {
+		var dId = $(this).attr('document-id');
+		releaseRecord(dId);
+	}).on('click', '.nav-del', function() {
+		var dId = $(this).attr('document-id');
+		del_file(dId);
+	});
+});
+
+function del_file(id){
+	var status = false;
+	var confirm_title = "你确定要删除这个文件?";
+	if ('undefined' != typeof(deleteUrlPrefix)) {
+		var deleteUrl = deleteUrlPrefix + id;
+	} else {
+		var deleteUrl = urlPrefix + "delete_file/" + id + "?needRedirect=1";
+	}
+
+	TFL.confirm(confirm_title,function(){
+		$.ajax({
+			url: deleteUrl,
+			type: 'GET',
+			success: function(data){
+				if ('200' == data) {
+					$.cookie('file_message', '删除成功', {path: '/'});
+                	window.location.href = urlPrefix + 'file_list/' + folderId + '?show_message=1';
+                	return false;
+				} else {
+					TFL.tips.showFlash(data, true, 3000);
+				}
+			}
+		});
+	});
+	
+	return false;
+}
+
+//预览移动
+function move_file(file_id){
+	//拼接url
+	var request_move_frame_url = urlPrefix + 'move_frame';
+	request_move_frame_url = request_move_frame_url + '/Document/' + file_id;
+
+	//弹出对话框
+	TFL.dialog.init();
+	TFL.dialog.show({
+		'title': '移动',
+		'url': request_move_frame_url + '?width=530&height=420&multi_move=true',
+		'dataBtn': '确定:submit_to_move,取消`.btn-default`:cancel_to_move',
+		'useIframe': true,
+		'fullscreen': false,
+		'customClass' : 'ui-dialog-new'
+	});
+
+	return false;
+}
+
+//预览移动
+function copy_file(file_id){
+	//拼接url
+	var request_move_frame_url = urlPrefix + 'copy_frame';
+	request_move_frame_url = request_move_frame_url + '/Document/' + file_id;
+
+	//弹出对话框
+	TFL.dialog.init();
+	TFL.dialog.show({
+		'title': '复制',
+		'url': request_move_frame_url + '?width=530&height=420',
+		'dataBtn': '确定:submit_to_copy,取消`.btn-default`:cancel_to_copy',
+		'useIframe': true,
+		'fullscreen': false,
+		'customClass' : 'ui-dialog-new'
+	});
+
+	return false;
+}
+
+
+function releaseRecord(fileId){
+	var title = '发布项目记录';
+	if(needReleaseHint){
+		title = title + '<span class="title-tip-wrap" data-control="cluetip" title="外网环境下，无法查看未开通外网项目的发布记录" theme="white" tipWidth="auto" offsety="10" style="cursor:pointer;"><i class="font font-alert" style="font-size:17px;color:#A7BEE2;vertical-align:-3px;margin-left:3px;"></i></span>';
+	}
+	var options = {
+		title: title,
+		url: urlPrefix + 'release_records/' + fileId + '?width=540&height=410',
+		useIframe: false,
+		fullscreen: false,
+		customClass: 'ui-dialog-new'
+	};
+	TFL.dialog.show(options);
+}
+
+//提交移动请求
+function submit_to_move(){
+	//iframe下调用需找到iframe之外的元素
+	var iframes = $('iframe');
+	var iframeDoc = iframes.length == 2 ? iframes[1].contentWindow : iframes[0].contentWindow;
+	var selected_folder_id = iframeDoc.$('#folder-root').attr('selected-folder-id');
+	var selected_folder_name = iframeDoc.$('#folder-root').attr('selected-folder-name');
+	var selected_entity_json = iframeDoc.$('#folder-root').attr('selected-entity-json');
+
+	var request_move_url = urlPrefix + 'move';
+
+	$.post(
+		request_move_url,
+		{'folder_id': selected_folder_id, 'selected_entity_json': selected_entity_json},
+		function(data){
+			if(data == '200'){
+				//去掉iframe
+				TFL.dialog.close();
+				var tips = '文件已经被移动到"'+selected_folder_name+'"文件夹';
+				TFL.tips.showFlash(tips, true, 3000);
+
+				//调整左上角按钮的链接
+				var $homeButton = $('#menuBar').find('.document-home');
+				if($homeButton.length == 0){
+					$homeButton = $('#menuBar').find('.mindmap-home');
+				}
+				var oldHref = $homeButton.attr('href');
+				var idx = oldHref.lastIndexOf('/');
+				if(idx != -1){
+					var str = oldHref.substring(idx + 1);
+					if(/^\d+$/.test(str) && str.length == selected_folder_id.length){
+						var newHref = oldHref.substring(0, idx) + '/' + selected_folder_id;
+						$homeButton.attr('href', newHref);
+					}
+				}
+
+				// $('#menuBar .document-home').attr('href', base_path+'/documents/file_list/'+selected_folder_id);
+				// setTimeout(function(){
+				// 	window.location.reload();
+				// }, 3000);
+			} else {
+				data = JSON.parse(data);
+                var ret_code = data.return_code;
+
+                var tips = '文件移动失败：';
+                if(ret_code == '300') tips = tips + '当前文件夹下有重名文件，请尝试另外一个文件名';
+                if(ret_code == '400') tips = tips + '参数错误';
+                if('401' == ret_code) {
+					$.cookie('file_message', '移动的文件已经被设置为私有', {path: '/'});
+                	window.location.href = urlPrefix + 'file_list?show_message=1';
+                	return;
+                }
+                TFL.tips.showFlash(tips, true, 3000);
+			}
+		}
+	);
+}
+
+function submitToCopy() {
+	var targetFolderId = $('iframe[src*=copy_frame]')[0].contentWindow.$('#folder-root').attr('selected-folder-id');
+	var currentFolderId = $('iframe[src*=copy_frame]')[0].contentWindow.$('#folder-root').attr('current-folder-id');
+	var targetFolderName = $('iframe[src*=copy_frame]')[0].contentWindow.$('#folder-root').attr('selected-folder-name');
+	var selectedEntityJson = $('iframe[src*=copy_frame]')[0].contentWindow.$('#folder-root').attr('selected-entity-json');
+
+	var request_copy_url = urlPrefix + 'copy';
+
+	$.post(
+		request_copy_url,
+		{'target_folder_id': targetFolderId, 'selected_entity_json': selectedEntityJson, 'current_folder_id': currentFolderId},
+		function(data){
+			data = JSON.parse(data);
+			var ret = data.return_records;
+			TFL.dialog.close();
+			TFL.tips.showFlash(data.return_message, true, 3000);
+		}
+	);
+}
+
+function delete_comment(t) {
+	$.ajax({
+		url : $(t).attr('href'),
+		type: 'post',
+		success : function(data) {
+			if (data == '1') {
+				TFL.tips.showFlash('删除评论成功');
+				var $item = $(t).parents('.combox-item');
+				$item.animate({left: '2000px'});
+				maintainCommentDataset($(t).attr('comment-id'), false);
+				setTimeout(function() {
+					$item.remove();
+				}, 1000);
+			} else {
+				if(data == '400'){
+					TFL.tips.showFlash('该评论已不存在');
+				}else{
+					TFL.tips.showFlash('删除失败，请重试');
+				}
+			}
+		}
+	});
+}
+
+function scrollToLoadMoreLogs(){
+	var scrollHight = 0; //滚动距离总长(注意不是滚动条的长度)
+    var scrollTop = 0;   //滚动到的当前位置
+	var wrapHight = $("#detail-active-ul").height();
+	$('.fd-detail').scroll(function(){		
+		wrapHight = $(this).find("#detail-active-ul").height();
+		scrollHight = $(this)[0].scrollHeight;
+        scrollTop = $(this)[0].scrollTop;
+        if(scrollTop + wrapHight >= scrollHight + 50){
+        	window.current_log_page++;
+        	$('#detail-active-ul li:lt(' + window.logs_per_page*window.current_log_page + ')').show();        	
+        }
+	});
+}
+
+// 左右滑动动画
+function miniRightWrap(){
+	$('.fd-toggle').click(function() {
+		if ($(this).hasClass('fd-toggle-close')) {
+			$('.fd-right').show().animate({
+				'width': '436px'
+			}, 500);
+			$('.fd-left').animate({
+				'right': '450px'
+			}, 500);
+			$(this).animate({
+				'right': '436px'
+			}, 500);
+			$(this).removeClass('fd-toggle-close').removeClass('icon-arrow-right').addClass('icon-arrow-left');
+		} else {
+			$('.fd-right').animate({
+				'width': '0'
+			}, 500, function() {
+				$(this).hide();
+			});
+			$('.fd-left').animate({
+				'right': '0'
+			}, 500);
+			$(this).animate({
+				right: 0
+			}, 500);
+			$(this).addClass('fd-toggle-close').removeClass('icon-arrow-left').addClass('icon-arrow-right');
+		}
+	});
+}
+
+//关闭iframe
+function cancel_to_move(){
+	TFL.dialog.close();
+}
+
+// 提示没有安装flash插件
+function checkFlashPlugin(){
+    if(check_flash_plugin().ie && !check_flash_plugin().f){
+        TFL.tips.showFlash('您的浏览器需要安装flash才能使用上传组件！');
+        return false;
+    }
+    return true;
+}
+
+function deal_favorite(a) {
+	var id = $(a).attr('object-id');
+	var file_type = $(a).attr('object-type');
+	var action_type = $(a).hasClass('highlight') ? 'unstar' : 'star';
+	$.get(_base + _workspace_pretty_name + '/documents/favorite/'+id+'/'+action_type+'/'+file_type, function() {
+		if($(a).hasClass('highlight')) {
+			//取消收藏
+			TFL.tips.showFlash('已取消关注');
+			$(a).attr('title','关注');
+			$(a).removeClass('highlight')
+		}else {
+			TFL.tips.showFlash('已关注');
+			$(a).attr('title','取消关注');
+			$(a).addClass('highlight')
+		}
+	})
+}
+
+function fileToDocument(obj) {
+
+	var id = $(obj).attr('object-id');
+	if ( $(obj).attr('dato-to-word') == 1 ) {
+		TFL.tips.showFlash('正在转为在线文档，请稍候');
+		return;
+	}
+	TFL.confirm("转换后原有的评论和变更历史记录将无法查看，确定转换？", function(){
+		$(obj).attr('dato-to-word','1');
+		// TFL.use('mask', function() {
+		// 	TFL.mask.init("#mask_div");
+		// });
+		TFL.tips.showPreload('请稍等，正在转为在线文档...');
+		$.get(fileToWordUrlPrefix + id + "?t=" + new Date().getTime(), function(data) {
+			if ('0' == data) {
+				// TFL.mask.remove();
+				TFL.tips.hidePreload();
+				TFL.tips.showFlash('转换失败');
+				$(obj).removeAttr('dato-to-word');
+				return false;
+			} else {
+				// TFL.mask.remove();
+				TFL.tips.hidePreload();
+				window.location.href = urlPrefix + 'view/' + data;
+
+				return;
+			}
+		});
+	});
+	return false;
+}
+
+function initComments(){
+	if ('undefined' != typeof(comments)) {
+		var deleteUrlPrefix = urlPrefix + 'delete_comment/';
+		var commentHtml = template('tpl-comment', { comment: comments, deleteUrlPrefix: deleteUrlPrefix, currentUser: user_nick});
+		if (commentHtml.length < 2) {
+			commentHtml = '<p class="comment-empty-tip">暂无任何评论</p>';
+		}
+		$('#detail-content').html(commentHtml);
+	}
+}
+
+function avatarTextExtraClass(nick){
+	nick_fl = nick.substr(0, 1);
+	var avatar_text_extra_class = '';
+	var pattern = /^[a-zA-Z]/;
+	if (nick_fl.match(pattern)){
+		avatar_text_extra_class = 'avatar-' + nick_fl;
+	}
+	return avatar_text_extra_class;	
+}
+
+function initChangeLogs(){
+	var logHtml = template('logs-tpl', { logs: actions});
+	$('#detail-content').html(logHtml);
+}
+
+function maintainCommentDataset(data, isAdd){
+	if(isAdd){
+		for(var i in data){
+			comments.unshift(data[i]);
+		}
+	} else {
+		var key = -1;
+		var n = comments.length;
+		for(var i=0; i<n; i++){
+			if(comments[i]['id'] == data){
+				key = i;
+				break;
+			}
+		}
+		comments = comments.slice(0, key).concat(comments.slice(key+1));
+	}
+}
+
+function bindXmindToMindmap(){
+	var postUrl = urlPrefix + '/transfer_xmind_to_mindmap';
+	$('#xmind-to-mindmap').click(function(){
+		var fileId = $(this).attr('object-id');
+		TFL.confirm("转换后原有的评论和变更历史记录将无法查看，确定转换？", function(){
+			TFL.use('mask', function() {
+				TFL.mask.init("#mask_div");
+				var postData = {
+					data:{
+						id : fileId
+					}
+				};
+				$.ajax({
+					url : postUrl,
+					data : postData,
+					type : 'POST',
+					success : function(data){
+						TFL.mask.remove();
+						if ('0' == data) {
+							TFL.tips.showFlash('转换失败');
+							return false;
+						} else {
+							window.location.href = urlPrefix + 'view/' + data + '/?is_from_xmind=1';
+							return;
+						}
+					}
+				});
+			});
+		});
+		return false;
+	});
+}
